@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { Camera, CheckCircle2, RotateCw, FileText, Sparkles, Tag, ShieldCheck, Layers, Smartphone } from 'lucide-react';
+import {
+  Camera,
+  CheckCircle2,
+  RotateCw,
+  FileText,
+  Sparkles,
+  Tag,
+  ShieldCheck,
+  Layers,
+  Smartphone,
+} from 'lucide-react';
 import { ValuationResult } from '../types';
 
 interface IdentificationCardProps {
@@ -31,11 +41,13 @@ export const IdentificationCard: React.FC<IdentificationCardProps> = ({
    * @returns {string} Cadena monetaria legible para la UI.
    */
   const formatMXN = (val: number) => {
-    return new Intl.NumberFormat('es-MX', {
-      style: 'currency',
-      currency: 'MXN',
-      maximumFractionDigits: 0,
-    }).format(val) + ' MXN';
+    return (
+      new Intl.NumberFormat('es-MX', {
+        style: 'currency',
+        currency: 'MXN',
+        maximumFractionDigits: 0,
+      }).format(val) + ' MXN'
+    );
   };
 
   return (
@@ -150,7 +162,9 @@ export const IdentificationCard: React.FC<IdentificationCardProps> = ({
                 </div>
 
                 <div className="self-start sm:self-center text-right bg-slate-950/80 border border-slate-800 p-2.5 rounded-lg">
-                  <span className="text-[10px] text-slate-400 block uppercase font-mono">Estado Visual</span>
+                  <span className="text-[10px] text-slate-400 block uppercase font-mono">
+                    Estado Visual
+                  </span>
                   <span className="text-sm font-bold text-emerald-300 flex items-center gap-1 justify-end">
                     <ShieldCheck className="w-4 h-4 text-emerald-400" />
                     {product.apparentCondition}
@@ -181,7 +195,9 @@ export const IdentificationCard: React.FC<IdentificationCardProps> = ({
               {/* Friendly advice */}
               <div className="text-xs text-slate-300 leading-relaxed bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 flex items-center justify-between gap-2">
                 <span>
-                  💡 <strong className="text-white">Tip de venta:</strong> Un artículo en estado <strong className="text-emerald-400">"{product.apparentCondition}"</strong> suele venderse en menos de 7 días si lo anuncias en su precio justo.
+                  💡 <strong className="text-white">Tip de venta:</strong> Un artículo en estado{' '}
+                  <strong className="text-emerald-400">"{product.apparentCondition}"</strong> suele
+                  venderse en menos de 7 días si lo anuncias en su precio justo.
                 </span>
                 <button
                   onClick={() => setIsFlipped(true)}
@@ -241,7 +257,9 @@ export const IdentificationCard: React.FC<IdentificationCardProps> = ({
                 </li>
                 <li className="flex justify-between">
                   <span className="text-slate-400">Índice de Certeza:</span>
-                  <span className="font-mono text-emerald-400 font-bold">{product.confidence}%</span>
+                  <span className="font-mono text-emerald-400 font-bold">
+                    {product.confidence}%
+                  </span>
                 </li>
                 <li className="flex justify-between">
                   <span className="text-slate-400">Fecha de Valuación:</span>
@@ -257,19 +275,27 @@ export const IdentificationCard: React.FC<IdentificationCardProps> = ({
               <ul className="space-y-2 text-xs">
                 <li className="flex justify-between">
                   <span className="text-slate-400">Precio Nuevo Tienda:</span>
-                  <span className="font-mono font-bold text-slate-200">{formatMXN(marketRadiography.retailNewMin)}</span>
+                  <span className="font-mono font-bold text-slate-200">
+                    {formatMXN(marketRadiography.retailNewMin)}
+                  </span>
                 </li>
                 <li className="flex justify-between">
                   <span className="text-slate-400">Mínimo en Marketplace:</span>
-                  <span className="font-mono text-amber-300 font-semibold">{formatMXN(marketRadiography.usedMin)}</span>
+                  <span className="font-mono text-amber-300 font-semibold">
+                    {formatMXN(marketRadiography.usedMin)}
+                  </span>
                 </li>
                 <li className="flex justify-between">
                   <span className="text-slate-400">Promedio Transacciones:</span>
-                  <span className="font-mono text-emerald-400 font-bold">{formatMXN(marketRadiography.usedAverage)}</span>
+                  <span className="font-mono text-emerald-400 font-bold">
+                    {formatMXN(marketRadiography.usedAverage)}
+                  </span>
                 </li>
                 <li className="flex justify-between">
                   <span className="text-slate-400">Tope con Caja Original:</span>
-                  <span className="font-mono text-cyan-300 font-bold">{formatMXN(marketRadiography.usedMax)}</span>
+                  <span className="font-mono text-cyan-300 font-bold">
+                    {formatMXN(marketRadiography.usedMax)}
+                  </span>
                 </li>
               </ul>
             </div>

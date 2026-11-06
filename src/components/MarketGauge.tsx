@@ -1,5 +1,13 @@
 import React from 'react';
-import { ShoppingCart, Store, Flame, ShieldAlert, ArrowUpRight, TrendingUp, ExternalLink } from 'lucide-react';
+import {
+  ShoppingCart,
+  Store,
+  Flame,
+  ShieldAlert,
+  ArrowUpRight,
+  TrendingUp,
+  ExternalLink,
+} from 'lucide-react';
 import { ValuationResult } from '../types';
 
 interface MarketGaugeProps {
@@ -15,14 +23,8 @@ interface MarketGaugeProps {
  * en Mercado Libre México, Facebook Marketplace y Amazon México.
  */
 export const MarketGauge: React.FC<MarketGaugeProps> = ({ radiography, productName }) => {
-  const {
-    retailNewMin,
-    retailNewMax,
-    usedMin,
-    usedMax,
-    usedAverage,
-    platformEstimates,
-  } = radiography;
+  const { retailNewMin, retailNewMax, usedMin, usedMax, usedAverage, platformEstimates } =
+    radiography;
 
   /**
    * formatMXN
@@ -31,11 +33,13 @@ export const MarketGauge: React.FC<MarketGaugeProps> = ({ radiography, productNa
    * @returns {string} Cadena formateada para la interfaz de radiografía.
    */
   const formatMXN = (val: number) => {
-    return new Intl.NumberFormat('es-MX', {
-      style: 'currency',
-      currency: 'MXN',
-      maximumFractionDigits: 0,
-    }).format(val) + ' MXN';
+    return (
+      new Intl.NumberFormat('es-MX', {
+        style: 'currency',
+        currency: 'MXN',
+        maximumFractionDigits: 0,
+      }).format(val) + ' MXN'
+    );
   };
 
   // Calculate percentage position of used average within the used range
@@ -81,9 +85,7 @@ export const MarketGauge: React.FC<MarketGaugeProps> = ({ radiography, productNa
           <div className="text-base sm:text-lg font-mono font-extrabold text-slate-200 tabular-nums">
             {formatMXN(retailNewMin)} – {formatMXN(retailNewMax)}
           </div>
-          <p className="text-xs text-slate-400">
-            Liverpool, Amazon MX y distribuidores oficiales
-          </p>
+          <p className="text-xs text-slate-400">Liverpool, Amazon MX y distribuidores oficiales</p>
         </div>
 
         {/* Used Market Range */}
@@ -158,9 +160,7 @@ export const MarketGauge: React.FC<MarketGaugeProps> = ({ radiography, productNa
           {/* Mercado Libre */}
           <div className="bg-slate-950/70 border border-slate-800 rounded-xl p-3 flex flex-col justify-between gap-2.5 hover:border-amber-500/50 transition-colors">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-amber-300">
-                Mercado Libre MX
-              </span>
+              <span className="text-xs font-bold text-amber-300">Mercado Libre MX</span>
               <span className="text-[10px] font-medium text-slate-400 bg-slate-900 px-2 py-0.5 rounded-md border border-slate-800">
                 Con comisión
               </span>
@@ -182,9 +182,7 @@ export const MarketGauge: React.FC<MarketGaugeProps> = ({ radiography, productNa
           {/* Facebook Marketplace */}
           <div className="bg-slate-950/70 border border-slate-800 rounded-xl p-3 flex flex-col justify-between gap-2.5 hover:border-sky-500/50 transition-colors">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-sky-400">
-                Facebook Marketplace
-              </span>
+              <span className="text-xs font-bold text-sky-400">Facebook Marketplace</span>
               <span className="text-[10px] font-medium text-slate-400 bg-slate-900 px-2 py-0.5 rounded-md border border-slate-800">
                 Trato en mano
               </span>
@@ -206,9 +204,7 @@ export const MarketGauge: React.FC<MarketGaugeProps> = ({ radiography, productNa
           {/* Amazon MX */}
           <div className="bg-slate-950/70 border border-slate-800 rounded-xl p-3 flex flex-col justify-between gap-2.5 hover:border-orange-500/50 transition-colors">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-orange-400">
-                Amazon MX Renewed
-              </span>
+              <span className="text-xs font-bold text-orange-400">Amazon MX Renewed</span>
               <span className="text-[10px] font-medium text-slate-400 bg-slate-900 px-2 py-0.5 rounded-md border border-slate-800">
                 Con garantía
               </span>

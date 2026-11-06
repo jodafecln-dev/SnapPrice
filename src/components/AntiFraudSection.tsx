@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { ShieldAlert, ShieldCheck, AlertTriangle, CheckCircle2, ChevronDown, ChevronUp, Lock, Zap } from 'lucide-react';
+import {
+  ShieldAlert,
+  ShieldCheck,
+  AlertTriangle,
+  CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  Lock,
+  Zap,
+} from 'lucide-react';
 
 export const AntiFraudSection: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -8,32 +17,40 @@ export const AntiFraudSection: React.FC = () => {
     {
       title: '1. El "Gancho del 40%": Precio ridículamente barato para pedir anticipo',
       desc: 'Ponen un iPhone 15 o una PS5 a $3,500 o $4,000 MXN diciendo que "les urge por mudanza" o "es de aduana". Al escribirles, dicen que hay 15 personas formadas y que si les depositas $500 MXN en OXXO te lo apartan. Una vez depositado, te bloquean al instante.',
-      protection: 'REGLA DE ORO DE SNAPPRICE: Si está más de 40% por debajo del precio promedio real, es una trampa. NUNCA des un solo peso de apartado sin tener el equipo prendido y probado en tus manos.',
+      protection:
+        'REGLA DE ORO DE SNAPPRICE: Si está más de 40% por debajo del precio promedio real, es una trampa. NUNCA des un solo peso de apartado sin tener el equipo prendido y probado en tus manos.',
     },
     {
       title: '2. "Mando un Uber / DiDi por el producto y te transfiero"',
       desc: 'El supuesto comprador dice estar ocupado y manda un chofer a recoger el paquete. Mientras el chofer espera afuera de tu casa, te mandan una captura de pantalla de transferencia falsa o un correo apócrifo de Mercado Pago.',
-      protection: 'No le des el producto al chofer hasta que entres a la app de tu propio banco y veas el dinero en "Saldo Disponible" (no en tránsito ni retenido).',
+      protection:
+        'No le des el producto al chofer hasta que entres a la app de tu propio banco y veas el dinero en "Saldo Disponible" (no en tránsito ni retenido).',
     },
     {
       title: '3. El cheque con trampa "Salvo Buen Cobro"',
       desc: 'Depositan un cheque sin fondos en cajero automático. En tu app bancaria se ve el saldo en la cuenta pero con la leyenda "Salvo buen cobro". A las 24 horas el banco rechaza el cheque y te descuenta el dinero cuando ya entregaste el producto.',
-      protection: 'Solo acepta transferencias SPEI interbancarias directas de acreditación inmediata.',
+      protection:
+        'Solo acepta transferencias SPEI interbancarias directas de acreditación inmediata.',
     },
     {
       title: '4. Celulares o Macs con candado de tienda o empresa (MDM / PayJoy)',
       desc: 'Venden equipos que fueron sacados a pagos en tiendas (PayJoy, Macropay) o que pertenecen a corporativos con software empresarial (MDM). Funcionan al momento de la compra, pero a los días se bloquean por completo.',
-      protection: 'Exige restablecer de fábrica el equipo en tu cara conectado al Wi-Fi de tu celular. Si pide usuario de empresa o no deja restablecer, cancela el trato.',
+      protection:
+        'Exige restablecer de fábrica el equipo en tu cara conectado al Wi-Fi de tu celular. Si pide usuario de empresa o no deja restablecer, cancela el trato.',
     },
     {
       title: '5. Consolas PS5 o Xbox con baneo de red permanente',
       desc: 'Te venden una consola que prende bien, pero al intentar conectarte a internet o a PlayStation Network / Xbox Live aparece un letrero de baneo permanente por trampas o robos.',
-      protection: 'Reúnanse en un lugar con conexión o lleva una pantalla portátil para verificar que inicie sesión en la tienda oficial.',
+      protection:
+        'Reúnanse en un lugar con conexión o lleva una pantalla portátil para verificar que inicie sesión en la tienda oficial.',
     },
   ];
 
   return (
-    <div id="antifraude-section" className="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 sm:p-7 shadow-[0_0_35px_-10px_rgba(244,63,94,0.1)] backdrop-blur-xl space-y-6 relative overflow-hidden">
+    <div
+      id="antifraude-section"
+      className="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 sm:p-7 shadow-[0_0_35px_-10px_rgba(244,63,94,0.1)] backdrop-blur-xl space-y-6 relative overflow-hidden"
+    >
       {/* Decorative neon rose glow */}
       <div className="absolute top-0 right-0 w-80 h-80 bg-rose-500/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -58,7 +75,9 @@ export const AntiFraudSection: React.FC = () => {
       </div>
 
       <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
-        En grupos de compraventa y Facebook Marketplace en México, más del 18% de las ofertas con precios anormalmente bajos son trampas de anticipo o clonaciones. Aquí tienes cómo blindar tu dinero en 1 minuto:
+        En grupos de compraventa y Facebook Marketplace en México, más del 18% de las ofertas con
+        precios anormalmente bajos son trampas de anticipo o clonaciones. Aquí tienes cómo blindar
+        tu dinero en 1 minuto:
       </p>
 
       {/* Accordion of top fraud tactics in Mexico */}
@@ -74,9 +93,7 @@ export const AntiFraudSection: React.FC = () => {
                 onClick={() => setOpenFaq(isOpen ? null : idx)}
                 className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-slate-900/60 transition-colors"
               >
-                <span className="text-xs sm:text-sm font-bold text-white pr-4">
-                  {item.title}
-                </span>
+                <span className="text-xs sm:text-sm font-bold text-white pr-4">{item.title}</span>
                 {isOpen ? (
                   <ChevronUp className="w-4 h-4 text-emerald-400 shrink-0" />
                 ) : (
@@ -90,7 +107,9 @@ export const AntiFraudSection: React.FC = () => {
                   <div className="p-3.5 bg-emerald-950/40 border border-emerald-500/40 rounded-xl text-emerald-300 text-xs leading-relaxed flex items-start gap-2 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
                     <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="block text-emerald-200 mb-0.5">Cómo blindarte con SnapPrice:</strong>
+                      <strong className="block text-emerald-200 mb-0.5">
+                        Cómo blindarte con SnapPrice:
+                      </strong>
                       {item.protection}
                     </div>
                   </div>
@@ -108,8 +127,13 @@ export const AntiFraudSection: React.FC = () => {
             <Lock className="w-4 h-4" />
           </div>
           <div>
-            <h4 className="text-xs font-bold text-white">¿Dónde cerrar el trato de forma segura en México?</h4>
-            <p className="text-xs text-slate-400">Recomendamos plazas comerciales vigiladas, áreas de comida o bancos con cámaras activas.</p>
+            <h4 className="text-xs font-bold text-white">
+              ¿Dónde cerrar el trato de forma segura en México?
+            </h4>
+            <p className="text-xs text-slate-400">
+              Recomendamos plazas comerciales vigiladas, áreas de comida o bancos con cámaras
+              activas.
+            </p>
           </div>
         </div>
       </div>

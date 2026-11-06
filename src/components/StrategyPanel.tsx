@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import { 
-  Zap, 
-  Scale, 
-  Clock, 
-  Copy, 
-  Check, 
-  Briefcase, 
-  TrendingUp, 
-  ShieldAlert, 
-  ShieldCheck, 
-  Calculator, 
+import {
+  Zap,
+  Scale,
+  Clock,
+  Copy,
+  Check,
+  Briefcase,
+  TrendingUp,
+  ShieldAlert,
+  ShieldCheck,
+  Calculator,
   AlertTriangle,
   Lightbulb,
   Sparkles,
   Flame,
-  MessageCircle
+  MessageCircle,
 } from 'lucide-react';
 import { ValuationResult, UserIntent } from '../types';
 
@@ -35,7 +35,7 @@ export const StrategyPanel: React.FC<StrategyPanelProps> = ({
   // Flipping interactive calculator state
   const [refurbCost, setRefurbCost] = useState<number>(strategies.flipping.refurbBuffer || 400);
   const [platformFeePct, setPlatformFeePct] = useState<number>(10);
-  
+
   // Buyer test price simulator state
   const [simulatedPrice, setSimulatedPrice] = useState<string>('');
 
@@ -46,11 +46,13 @@ export const StrategyPanel: React.FC<StrategyPanelProps> = ({
    * @returns {string} Texto formateado con separadores de miles y sufijo MXN.
    */
   const formatMXN = (val: number) => {
-    return new Intl.NumberFormat('es-MX', {
-      style: 'currency',
-      currency: 'MXN',
-      maximumFractionDigits: 0,
-    }).format(val) + ' MXN';
+    return (
+      new Intl.NumberFormat('es-MX', {
+        style: 'currency',
+        currency: 'MXN',
+        maximumFractionDigits: 0,
+      }).format(val) + ' MXN'
+    );
   };
 
   /**
@@ -103,7 +105,8 @@ ${strategies.c2c.listingDescription}
 
   // Dynamic buyer scam calculation
   const parsedSimulatedPrice = parseFloat(simulatedPrice) || 0;
-  const scamRiskThreshold = strategies.buyer.scamWarningThreshold || (marketRadiography.usedAverage * 0.6);
+  const scamRiskThreshold =
+    strategies.buyer.scamWarningThreshold || marketRadiography.usedAverage * 0.6;
   const isSuspiciouslyLow = parsedSimulatedPrice > 0 && parsedSimulatedPrice < scamRiskThreshold;
 
   return (
@@ -182,7 +185,8 @@ ${strategies.c2c.listingDescription}
                 {formatMXN(strategies.c2c.fastSalePrice)}
               </div>
               <p className="text-xs text-slate-400 leading-relaxed">
-                El precio perfecto para recibir mensajes en Marketplace el mismo día y cerrar en horas.
+                El precio perfecto para recibir mensajes en Marketplace el mismo día y cerrar en
+                horas.
               </p>
             </div>
 
@@ -200,7 +204,8 @@ ${strategies.c2c.listingDescription}
                 {formatMXN(strategies.c2c.fairPrice)}
               </div>
               <p className="text-xs text-emerald-300/90 leading-relaxed font-medium">
-                Punto óptimo: no regalas tu dinero y la venta se concreta en aproximadamente una semana.
+                Punto óptimo: no regalas tu dinero y la venta se concreta en aproximadamente una
+                semana.
               </p>
             </div>
 
@@ -218,7 +223,8 @@ ${strategies.c2c.listingDescription}
                 {formatMXN(strategies.c2c.patientSalePrice)}
               </div>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Solo si tu artículo tiene empaque original, accesorios intactos y no tienes ninguna prisa.
+                Solo si tu artículo tiene empaque original, accesorios intactos y no tienes ninguna
+                prisa.
               </p>
             </div>
           </div>
@@ -231,8 +237,13 @@ ${strategies.c2c.listingDescription}
                   <Copy className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-extrabold text-white">📝 Tu Anuncio Listo para Copiar y Pegar</h4>
-                  <p className="text-xs text-slate-400">Diseñado con palabras clave para que el algoritmo de Mercado Libre y Marketplace te posicione arriba.</p>
+                  <h4 className="text-sm font-extrabold text-white">
+                    📝 Tu Anuncio Listo para Copiar y Pegar
+                  </h4>
+                  <p className="text-xs text-slate-400">
+                    Diseñado con palabras clave para que el algoritmo de Mercado Libre y Marketplace
+                    te posicione arriba.
+                  </p>
                 </div>
               </div>
 
@@ -275,7 +286,9 @@ ${strategies.c2c.listingDescription}
             {/* SEO Title */}
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs text-slate-400">
-                <span className="font-bold text-slate-200">Título Atractivo (Optimizado para búsquedas):</span>
+                <span className="font-bold text-slate-200">
+                  Título Atractivo (Optimizado para búsquedas):
+                </span>
                 <button
                   onClick={() => handleCopy(strategies.c2c.listingTitle, 'title')}
                   className="hover:text-emerald-400 transition-colors"
@@ -291,7 +304,9 @@ ${strategies.c2c.listingDescription}
             {/* Short Description */}
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs text-slate-400">
-                <span className="font-bold text-slate-200">Texto del Anuncio (Claro y directo):</span>
+                <span className="font-bold text-slate-200">
+                  Texto del Anuncio (Claro y directo):
+                </span>
                 <button
                   onClick={() => handleCopy(strategies.c2c.listingDescription, 'desc')}
                   className="hover:text-emerald-400 transition-colors"
@@ -307,7 +322,9 @@ ${strategies.c2c.listingDescription}
             {/* Recommendations */}
             {strategies.c2c.tips && strategies.c2c.tips.length > 0 && (
               <div className="pt-2 border-t border-slate-800/80">
-                <span className="text-xs font-bold text-slate-400 block mb-2">Tips para cerrar el trato sin problemas:</span>
+                <span className="text-xs font-bold text-slate-400 block mb-2">
+                  Tips para cerrar el trato sin problemas:
+                </span>
                 <ul className="space-y-1.5 text-xs text-slate-300">
                   {strategies.c2c.tips.map((tip, i) => (
                     <li key={i} className="flex items-start gap-2">
@@ -340,7 +357,8 @@ ${strategies.c2c.listingDescription}
                 {formatMXN(maxBuyPrice)}
               </div>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Tu precio tope para comprar barato, dejar margen de limpieza o comisiones y revender con ~100% de ganancia bruta.
+                Tu precio tope para comprar barato, dejar margen de limpieza o comisiones y revender
+                con ~100% de ganancia bruta.
               </p>
             </div>
 
@@ -367,7 +385,9 @@ ${strategies.c2c.listingDescription}
           <div className="bg-slate-950/80 border border-slate-800 rounded-2xl p-5 sm:p-6 space-y-4">
             <div className="flex items-center gap-2">
               <Calculator className="w-4 h-4 text-emerald-400" />
-              <h4 className="text-sm font-extrabold text-white">Calculadora Dinámica de Ganancia Neta</h4>
+              <h4 className="text-sm font-extrabold text-white">
+                Calculadora Dinámica de Ganancia Neta
+              </h4>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -382,7 +402,7 @@ ${strategies.c2c.listingDescription}
                   max="2500"
                   step="50"
                   value={refurbCost}
-                  onChange={(e) => setRefurbCost(Number(e.target.value))}
+                  onChange={e => setRefurbCost(Number(e.target.value))}
                   className="w-full accent-emerald-400 cursor-pointer"
                 />
               </div>
@@ -390,7 +410,9 @@ ${strategies.c2c.listingDescription}
               <div className="space-y-1.5">
                 <div className="flex justify-between text-xs text-slate-300">
                   <span>Comisión plataforma o envío (%):</span>
-                  <span className="font-mono font-bold text-white">{platformFeePct}% ({formatMXN(calculatedPlatformFee)})</span>
+                  <span className="font-mono font-bold text-white">
+                    {platformFeePct}% ({formatMXN(calculatedPlatformFee)})
+                  </span>
                 </div>
                 <input
                   type="range"
@@ -398,7 +420,7 @@ ${strategies.c2c.listingDescription}
                   max="20"
                   step="1"
                   value={platformFeePct}
-                  onChange={(e) => setPlatformFeePct(Number(e.target.value))}
+                  onChange={e => setPlatformFeePct(Number(e.target.value))}
                   className="w-full accent-emerald-400 cursor-pointer"
                 />
               </div>
@@ -413,7 +435,9 @@ ${strategies.c2c.listingDescription}
                 <span>Venta: {formatMXN(targetSellPrice)}</span>
               </div>
               <div className="text-right">
-                <span className="text-xs text-slate-400 block font-sans">Ganancia Neta en tu Bolsillo:</span>
+                <span className="text-xs text-slate-400 block font-sans">
+                  Ganancia Neta en tu Bolsillo:
+                </span>
                 <span className="text-xl font-mono font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-cyan-300 tabular-nums">
                   {formatMXN(dynamicNetProfit)} ({dynamicROI}% ROI)
                 </span>
@@ -423,7 +447,9 @@ ${strategies.c2c.listingDescription}
             {strategies.flipping.negotiationScript && (
               <div className="pt-3 border-t border-slate-800 space-y-2">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-slate-200">Mensaje Sugerido para Negociar en WhatsApp o Inbox:</span>
+                  <span className="font-bold text-slate-200">
+                    Mensaje Sugerido para Negociar en WhatsApp o Inbox:
+                  </span>
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
@@ -488,7 +514,8 @@ ${strategies.c2c.listingDescription}
                 Menos de {formatMXN(scamRiskThreshold)}
               </div>
               <p className="text-xs text-rose-300/80 leading-relaxed">
-                Si ves este producto por debajo de este precio, 99% seguro es un perfil fantasma pidiendo apartado o con candado.
+                Si ves este producto por debajo de este precio, 99% seguro es un perfil fantasma
+                pidiendo apartado o con candado.
               </p>
             </div>
           </div>
@@ -506,7 +533,7 @@ ${strategies.c2c.listingDescription}
                   type="number"
                   placeholder="Ej. 5200"
                   value={simulatedPrice}
-                  onChange={(e) => setSimulatedPrice(e.target.value)}
+                  onChange={e => setSimulatedPrice(e.target.value)}
                   className="w-full bg-slate-900 border border-slate-700/80 rounded-xl pl-7 pr-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400"
                 />
               </div>
@@ -518,16 +545,20 @@ ${strategies.c2c.listingDescription}
                   isSuspiciouslyLow
                     ? 'bg-rose-950/40 border-rose-500/60 text-rose-200'
                     : parsedSimulatedPrice <= strategies.buyer.targetMax
-                    ? 'bg-emerald-950/40 border-emerald-500/60 text-emerald-200'
-                    : 'bg-amber-950/40 border-amber-500/60 text-amber-200'
+                      ? 'bg-emerald-950/40 border-emerald-500/60 text-emerald-200'
+                      : 'bg-amber-950/40 border-amber-500/60 text-amber-200'
                 }`}
               >
                 {isSuspiciouslyLow ? (
                   <div className="flex items-start gap-2">
                     <ShieldAlert className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="block font-bold">¡CUIDADO! POSIBLE GANCHO FRAUDULENTO</strong>
-                      {formatMXN(parsedSimulatedPrice)} está más de 40% por debajo del mercado ({formatMXN(marketRadiography.usedAverage)}). Típica estafa donde te piden transferir para apartarlo o "mandarlo por paquetería". ¡No des anticipos!
+                      <strong className="block font-bold">
+                        ¡CUIDADO! POSIBLE GANCHO FRAUDULENTO
+                      </strong>
+                      {formatMXN(parsedSimulatedPrice)} está más de 40% por debajo del mercado (
+                      {formatMXN(marketRadiography.usedAverage)}). Típica estafa donde te piden
+                      transferir para apartarlo o "mandarlo por paquetería". ¡No des anticipos!
                     </div>
                   </div>
                 ) : parsedSimulatedPrice <= strategies.buyer.targetMax ? (
@@ -535,7 +566,8 @@ ${strategies.c2c.listingDescription}
                     <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                     <div>
                       <strong className="block font-bold">PRECIO EXCELENTE</strong>
-                      Está en el rango sano de compra. Solo recuerda probarlo en persona antes de pagar.
+                      Está en el rango sano de compra. Solo recuerda probarlo en persona antes de
+                      pagar.
                     </div>
                   </div>
                 ) : (
@@ -543,7 +575,8 @@ ${strategies.c2c.listingDescription}
                     <Lightbulb className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                     <div>
                       <strong className="block font-bold">PRECIO UN POCO CARO</strong>
-                      El vendedor pide {formatMXN(parsedSimulatedPrice)}. Tienes margen para negociar hasta los {formatMXN(marketRadiography.usedAverage)}.
+                      El vendedor pide {formatMXN(parsedSimulatedPrice)}. Tienes margen para
+                      negociar hasta los {formatMXN(marketRadiography.usedAverage)}.
                     </div>
                   </div>
                 )}
@@ -569,7 +602,10 @@ ${strategies.c2c.listingDescription}
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                   {strategies.buyer.verificationChecklist.map((check, i) => (
-                    <div key={i} className="flex items-center gap-2 p-2.5 bg-slate-900 rounded-xl border border-slate-800 text-slate-300">
+                    <div
+                      key={i}
+                      className="flex items-center gap-2 p-2.5 bg-slate-900 rounded-xl border border-slate-800 text-slate-300"
+                    >
                       <div className="w-4 h-4 rounded bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
                         ✓
                       </div>
@@ -591,9 +627,7 @@ ${strategies.c2c.listingDescription}
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">
                 📈 Demanda en México
               </span>
-              <div className="text-lg font-extrabold text-white">
-                {strategies.research.trend}
-              </div>
+              <div className="text-lg font-extrabold text-white">{strategies.research.trend}</div>
               <p className="text-xs text-slate-400">
                 Interés de compra registrado en plataformas nacionales.
               </p>
@@ -625,7 +659,9 @@ ${strategies.c2c.listingDescription}
           </div>
 
           <div className="bg-slate-950/80 border border-slate-800 rounded-2xl p-5 space-y-3">
-            <h4 className="text-sm font-extrabold text-white">Análisis de Mercado & Cuándo te conviene venderlo</h4>
+            <h4 className="text-sm font-extrabold text-white">
+              Análisis de Mercado & Cuándo te conviene venderlo
+            </h4>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
               {strategies.research.marketNotes}
             </p>

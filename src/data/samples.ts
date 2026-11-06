@@ -19,7 +19,8 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
     category: 'Consolas de Videojuegos',
     imagePath: '/src/assets/images/sample_ps5_1793599980617.jpg',
     apparentCondition: 'Como nuevo',
-    description: 'Consola Sony PlayStation 5 con mando DualSense blanco, cables originales HDMI de ultra alta velocidad, cable de corriente y base.',
+    description:
+      'Consola Sony PlayStation 5 con mando DualSense blanco, cables originales HDMI de ultra alta velocidad, cable de corriente y base.',
     initialResult: {
       product: {
         brand: 'Sony',
@@ -28,7 +29,12 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
         apparentCondition: 'Como nuevo',
         confidence: 98,
         category: 'Consolas de Videojuegos',
-        keySpecs: ['825GB SSD Ultrarrápido', 'Gráficos 4K HDR Ray Tracing', 'Mando DualSense Háptico', 'Puertos USB-C y HDMI 2.1'],
+        keySpecs: [
+          '825GB SSD Ultrarrápido',
+          'Gráficos 4K HDR Ray Tracing',
+          'Mando DualSense Háptico',
+          'Puertos USB-C y HDMI 2.1',
+        ],
         notes: 'Carcasas laterales limpias sin rayones, control sin drift en análogos.',
       },
       microCheck: [
@@ -70,8 +76,12 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
           fairPrice: 8200,
           patientSalePrice: 9100,
           listingTitle: 'Sony PS5 PlayStation 5 Impecable Con Control DualSense Caja y Cables',
-          listingDescription: 'Consola Sony PlayStation 5 en excelente estado 10/10. Mando DualSense sin drift, cables originales y base. Se entrega formateada de fábrica lista para jugar. Trato serio en punto vigilado.',
-          tips: ['Graba un video corto navegando en la PS Store para demostrar que no está baneada', 'Entrega en plaza comercial vigilada con acceso a corriente para probar'],
+          listingDescription:
+            'Consola Sony PlayStation 5 en excelente estado 10/10. Mando DualSense sin drift, cables originales y base. Se entrega formateada de fábrica lista para jugar. Trato serio en punto vigilado.',
+          tips: [
+            'Graba un video corto navegando en la PS Store para demostrar que no está baneada',
+            'Entrega en plaza comercial vigilada con acceso a corriente para probar',
+          ],
         },
         flipping: {
           maxPurchasePrice: 4100,
@@ -81,20 +91,27 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
           platformFee: 800,
           netProfit: 2950,
           roiPercentage: 72,
-          negotiationScript: 'Te ofrezco $4,100 MXN en efectivo inmediato hoy mismo, trato en mano seguro y sin vueltas.',
+          negotiationScript:
+            'Te ofrezco $4,100 MXN en efectivo inmediato hoy mismo, trato en mano seguro y sin vueltas.',
         },
         buyer: {
           targetMin: 7200,
           targetMax: 8400,
           scamWarningThreshold: 4900,
-          antiFraudAdvice: 'Alerta de estafa: Cualquier PS5 por menos de $5,000 MXN suele ser gancho para pedir apartado por OXXO. Nunca des anticipos.',
-          verificationChecklist: ['Probar conexión a internet y acceso a PSN (que no esté baneada)', 'Revisar drift en sticks del control', 'Verificar puerto HDMI y lector de discos'],
+          antiFraudAdvice:
+            'Alerta de estafa: Cualquier PS5 por menos de $5,000 MXN suele ser gancho para pedir apartado por OXXO. Nunca des anticipos.',
+          verificationChecklist: [
+            'Probar conexión a internet y acceso a PSN (que no esté baneada)',
+            'Revisar drift en sticks del control',
+            'Verificar puerto HDMI y lector de discos',
+          ],
         },
         research: {
           trend: 'Alta demanda sostenida en territorio nacional',
           annualDepreciationRate: '8% anual (muy resistente a pérdida de valor)',
           liquidityIndex: 'Alta',
-          marketNotes: 'La consola con mayor volumen de transacciones en México. Tiempo promedio de venta: 2 a 4 días.',
+          marketNotes:
+            'La consola con mayor volumen de transacciones en México. Tiempo promedio de venta: 2 a 4 días.',
           bestTimeToSell: 'Viernes de quincena o temporadas decembrinas.',
         },
       },
@@ -163,7 +180,8 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
         sampleCount: 19,
         outliersExcluded: 3,
         medianPrice: 8200,
-        formulaNotes: 'Mediana de 16 publicaciones válidas tras descartar 2 estafas con precio irreal (-48%) y 1 sobreprecio de importación.',
+        formulaNotes:
+          'Mediana de 16 publicaciones válidas tras descartar 2 estafas con precio irreal (-48%) y 1 sobreprecio de importación.',
         confidenceScore: 98,
       },
       todayRecommendation: {
@@ -184,7 +202,8 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
     category: 'Consolas de Videojuegos',
     imagePath: '/src/assets/images/sample_ps5_1793599980617.jpg',
     apparentCondition: 'Como nuevo',
-    description: 'Nintendo Switch modelo OLED con pantalla de 7 pulgadas color blanco, Joy-Cons originales sin drift, dock con puerto LAN y cargador original.',
+    description:
+      'Nintendo Switch modelo OLED con pantalla de 7 pulgadas color blanco, Joy-Cons originales sin drift, dock con puerto LAN y cargador original.',
     initialResult: {
       product: {
         brand: 'Nintendo',
@@ -193,8 +212,14 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
         apparentCondition: 'Como nuevo',
         confidence: 97,
         category: 'Consolas Portátiles',
-        keySpecs: ['Pantalla OLED vibrante de 7"', '64GB Almacenamiento Interno', 'Dock con puerto LAN Ethernet', 'Audio mejorado y soporte ancho'],
-        notes: 'Pantalla OLED con mica protectora de cristal templado, Joy-Cons calibrados sin drift.',
+        keySpecs: [
+          'Pantalla OLED vibrante de 7"',
+          '64GB Almacenamiento Interno',
+          'Dock con puerto LAN Ethernet',
+          'Audio mejorado y soporte ancho',
+        ],
+        notes:
+          'Pantalla OLED con mica protectora de cristal templado, Joy-Cons calibrados sin drift.',
       },
       microCheck: [
         {
@@ -206,7 +231,11 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
         {
           id: 'games_included',
           question: '¿Incluye juegos físicos o tarjeta microSD?',
-          options: ['Solo consola con accesorios', 'Con 1 juego físico (Zelda/Mario)', 'Con microSD 128GB+'],
+          options: [
+            'Solo consola con accesorios',
+            'Con 1 juego físico (Zelda/Mario)',
+            'Con microSD 128GB+',
+          ],
           selectedAnswer: 'Solo consola con accesorios',
         },
       ],
@@ -229,8 +258,12 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
           fairPrice: 5100,
           patientSalePrice: 5800,
           listingTitle: 'Nintendo Switch OLED 64GB Blanca Impecable Sin Drift En Caja',
-          listingDescription: 'Nintendo Switch OLED color blanco estética 10/10 con mica de cristal. Joy-Cons al 100% sin drift. Incluye dock LAN, cargador original y caja completa. Trato serio y entrega personal.',
-          tips: ['Muestra foto de la prueba de calibración de palancas en Ajustes', 'Aclara si tiene mica de cristal templado'],
+          listingDescription:
+            'Nintendo Switch OLED color blanco estética 10/10 con mica de cristal. Joy-Cons al 100% sin drift. Incluye dock LAN, cargador original y caja completa. Trato serio y entrega personal.',
+          tips: [
+            'Muestra foto de la prueba de calibración de palancas en Ajustes',
+            'Aclara si tiene mica de cristal templado',
+          ],
         },
         flipping: {
           maxPurchasePrice: 2550,
@@ -240,14 +273,20 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
           platformFee: 500,
           netProfit: 1800,
           roiPercentage: 70,
-          negotiationScript: 'Te ofrezco $2,500 MXN en efectivo inmediato hoy mismo sin intermediarios.',
+          negotiationScript:
+            'Te ofrezco $2,500 MXN en efectivo inmediato hoy mismo sin intermediarios.',
         },
         buyer: {
           targetMin: 4500,
           targetMax: 5200,
           scamWarningThreshold: 3100,
-          antiFraudAdvice: 'Desconfía de Switch OLED por menos de $3,500 MXN. Pide revisar el número de serie y probar ambos Joy-Cons.',
-          verificationChecklist: ['Probar calibración de Joy-Cons en el menú', 'Revisar pantalla táctil y conexión al dock', 'Probar lector de tarjetas de juego'],
+          antiFraudAdvice:
+            'Desconfía de Switch OLED por menos de $3,500 MXN. Pide revisar el número de serie y probar ambos Joy-Cons.',
+          verificationChecklist: [
+            'Probar calibración de Joy-Cons en el menú',
+            'Revisar pantalla táctil y conexión al dock',
+            'Probar lector de tarjetas de juego',
+          ],
         },
         research: {
           trend: 'Demanda muy estable y alta reventa',
@@ -323,7 +362,8 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
     category: 'Consolas de Videojuegos',
     imagePath: '/src/assets/images/sample_ps5_1793599980617.jpg',
     apparentCondition: 'Como nuevo',
-    description: 'Xbox Series X con 1TB de SSD NVMe de alta velocidad, lector de discos 4K UHD Blu-ray, control inalámbrico Xbox negro y cable HDMI 2.1.',
+    description:
+      'Xbox Series X con 1TB de SSD NVMe de alta velocidad, lector de discos 4K UHD Blu-ray, control inalámbrico Xbox negro y cable HDMI 2.1.',
     initialResult: {
       product: {
         brand: 'Microsoft',
@@ -332,14 +372,24 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
         apparentCondition: 'Como nuevo',
         confidence: 98,
         category: 'Consolas de Videojuegos',
-        keySpecs: ['12 Teraflops GPU', '1TB SSD NVMe Custom', 'Lector 4K Blu-ray Disc', 'Quick Resume & 120 FPS'],
-        notes: 'Ventilador silencioso, puerto HDMI en perfecto estado, control sin desgaste en grips.',
+        keySpecs: [
+          '12 Teraflops GPU',
+          '1TB SSD NVMe Custom',
+          'Lector 4K Blu-ray Disc',
+          'Quick Resume & 120 FPS',
+        ],
+        notes:
+          'Ventilador silencioso, puerto HDMI en perfecto estado, control sin desgaste en grips.',
       },
       microCheck: [
         {
           id: 'controller_series',
           question: '¿El control es el original de Series X o genérico?',
-          options: ['Control original Xbox Series negro', 'Control genérico / alámbrico', '2 Controles originales'],
+          options: [
+            'Control original Xbox Series negro',
+            'Control genérico / alámbrico',
+            '2 Controles originales',
+          ],
           selectedAnswer: 'Control original Xbox Series negro',
         },
         {
@@ -368,8 +418,12 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
           fairPrice: 8200,
           patientSalePrice: 9100,
           listingTitle: 'Xbox Series X 1TB Negra Impecable 10/10 Con Control y Caja',
-          listingDescription: 'Consola Xbox Series X de 1TB en impecable estado estético y funcional. Incluye mando original inalámbrico, cable HDMI 2.1 ultra rápido y caja. Probada al 100%. Entrega en plaza comercial.',
-          tips: ['Destaca si incluye meses de Game Pass activo', 'Muestra que el lector de discos lee juegos sin trabarse'],
+          listingDescription:
+            'Consola Xbox Series X de 1TB en impecable estado estético y funcional. Incluye mando original inalámbrico, cable HDMI 2.1 ultra rápido y caja. Probada al 100%. Entrega en plaza comercial.',
+          tips: [
+            'Destaca si incluye meses de Game Pass activo',
+            'Muestra que el lector de discos lee juegos sin trabarse',
+          ],
         },
         flipping: {
           maxPurchasePrice: 4100,
@@ -385,8 +439,13 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
           targetMin: 7200,
           targetMax: 8400,
           scamWarningThreshold: 4800,
-          antiFraudAdvice: 'Desconfía de ofertas por debajo de $5,000 MXN en Marketplace. Revisa que no tenga reporte de consola suspendida de Xbox Live.',
-          verificationChecklist: ['Conectar a red Wi-Fi y verificar sesión de Xbox Live', 'Probar lector de discos con un juego de Xbox', 'Comprobar que el ventilador no haga ruidos extraños'],
+          antiFraudAdvice:
+            'Desconfía de ofertas por debajo de $5,000 MXN en Marketplace. Revisa que no tenga reporte de consola suspendida de Xbox Live.',
+          verificationChecklist: [
+            'Conectar a red Wi-Fi y verificar sesión de Xbox Live',
+            'Probar lector de discos con un juego de Xbox',
+            'Comprobar que el ventilador no haga ruidos extraños',
+          ],
         },
         research: {
           trend: 'Demanda constante impulsada por Xbox Game Pass',
@@ -452,7 +511,8 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
     category: 'Videojuegos Físicos',
     imagePath: '/src/assets/images/sample_ps5_1793599980617.jpg',
     apparentCondition: 'Como nuevo',
-    description: 'Cartucho físico original de Nintendo Switch versión nacional/americana con caja y carátula impecables sin roturas.',
+    description:
+      'Cartucho físico original de Nintendo Switch versión nacional/americana con caja y carátula impecables sin roturas.',
     initialResult: {
       product: {
         brand: 'Nintendo',
@@ -461,7 +521,11 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
         apparentCondition: 'Como nuevo',
         confidence: 99,
         category: 'Videojuegos Físicos',
-        keySpecs: ['Cartucho original de Nintendo', 'Caja y portada original', 'Región Americana (Compatible con cuentas de México)'],
+        keySpecs: [
+          'Cartucho original de Nintendo',
+          'Caja y portada original',
+          'Región Americana (Compatible con cuentas de México)',
+        ],
         notes: 'Pines dorados del cartucho limpios, carátula sin dobleces ni roturas.',
       },
       microCheck: [
@@ -490,9 +554,14 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
           fastSalePrice: 800,
           fairPrice: 950,
           patientSalePrice: 1050,
-          listingTitle: 'The Legend of Zelda Tears of the Kingdom Nintendo Switch Físico Como Nuevo',
-          listingDescription: 'Juego original The Legend of Zelda Tears of the Kingdom para Nintendo Switch. Estuche y cartucho en perfecto estado 10/10. Pines limpios funcionando al 100%. Entrega en punto céntrico.',
-          tips: ['Fotografía los pines traseros del cartucho para comprobar que son dorados originales', 'Aclara que es compatible con cualquier modelo de Switch'],
+          listingTitle:
+            'The Legend of Zelda Tears of the Kingdom Nintendo Switch Físico Como Nuevo',
+          listingDescription:
+            'Juego original The Legend of Zelda Tears of the Kingdom para Nintendo Switch. Estuche y cartucho en perfecto estado 10/10. Pines limpios funcionando al 100%. Entrega en punto céntrico.',
+          tips: [
+            'Fotografía los pines traseros del cartucho para comprobar que son dorados originales',
+            'Aclara que es compatible con cualquier modelo de Switch',
+          ],
         },
         flipping: {
           maxPurchasePrice: 450,
@@ -508,8 +577,13 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
           targetMin: 850,
           targetMax: 980,
           scamWarningThreshold: 550,
-          antiFraudAdvice: 'Desconfía de precios menores a $550 MXN o cuentas que vendan "códigos digitales por WhatsApp". Exige cartucho físico probado.',
-          verificationChecklist: ['Comprobar que el cartucho sea reconocido al insertarlo en la Switch', 'Revisar que la portada no sea una copia impresa en papel bond', 'Verificar código de región USA/MEX'],
+          antiFraudAdvice:
+            'Desconfía de precios menores a $550 MXN o cuentas que vendan "códigos digitales por WhatsApp". Exige cartucho físico probado.',
+          verificationChecklist: [
+            'Comprobar que el cartucho sea reconocido al insertarlo en la Switch',
+            'Revisar que la portada no sea una copia impresa en papel bond',
+            'Verificar código de región USA/MEX',
+          ],
         },
         research: {
           trend: 'Valor de reventa extremadamente estable (los juegos de Zelda no se deprecian)',

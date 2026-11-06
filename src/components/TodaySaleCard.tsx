@@ -1,5 +1,16 @@
 import React from 'react';
-import { Calendar, Zap, Clock, TrendingUp, DollarSign, MessageCircle, Copy, Check, Sparkles, ShieldCheck } from 'lucide-react';
+import {
+  Calendar,
+  Zap,
+  Clock,
+  TrendingUp,
+  DollarSign,
+  MessageCircle,
+  Copy,
+  Check,
+  Sparkles,
+  ShieldCheck,
+} from 'lucide-react';
 import { TodayRecommendation, ValuationResult } from '../types';
 
 interface TodaySaleCardProps {
@@ -18,20 +29,24 @@ export const TodaySaleCard: React.FC<TodaySaleCardProps> = ({ todayRec, result }
   const [copied, setCopied] = React.useState(false);
 
   // Fecha de hoy formateada en español (México)
-  const todayFormatted = todayRec?.todayDate || new Intl.DateTimeFormat('es-MX', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  }).format(new Date());
+  const todayFormatted =
+    todayRec?.todayDate ||
+    new Intl.DateTimeFormat('es-MX', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(new Date());
 
   const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
   const priceToday = todayRec?.recommendedSellPriceToday || result.strategies.c2c.fastSalePrice;
   const cashInHand = todayRec?.cashInHandFast || priceToday;
   const saleVelocity = todayRec?.expectedSaleVelocity || 'Venta rápida (24 a 48 hrs)';
-  const momentum = todayRec?.marketMomentum || 'Alta rotación: fin de semana gamer con mayor búsqueda en México';
-  const optimalHours = todayRec?.optimalListingTime || 'Publicar hoy entre 6:00 PM y 9:30 PM (Pico de compradores)';
+  const momentum =
+    todayRec?.marketMomentum || 'Alta rotación: fin de semana gamer con mayor búsqueda en México';
+  const optimalHours =
+    todayRec?.optimalListingTime || 'Publicar hoy entre 6:00 PM y 9:30 PM (Pico de compradores)';
   const demandIndex = todayRec?.gamingDemandIndex || 'Alta';
 
   /**
@@ -39,11 +54,13 @@ export const TodaySaleCard: React.FC<TodaySaleCardProps> = ({ todayRec, result }
    * Formatea un monto monetario en Pesos Mexicanos ($XX,XXX MXN).
    */
   const formatMXN = (val: number) => {
-    return new Intl.NumberFormat('es-MX', {
-      style: 'currency',
-      currency: 'MXN',
-      maximumFractionDigits: 0,
-    }).format(val) + ' MXN';
+    return (
+      new Intl.NumberFormat('es-MX', {
+        style: 'currency',
+        currency: 'MXN',
+        maximumFractionDigits: 0,
+      }).format(val) + ' MXN'
+    );
   };
 
   /**
@@ -93,7 +110,9 @@ export const TodaySaleCard: React.FC<TodaySaleCardProps> = ({ todayRec, result }
             </div>
             <h3 className="text-base sm:text-lg font-black text-white tracking-tight flex items-center gap-1.5 mt-0.5">
               <span>Sugerencia de Venta Hoy ·</span>
-              <span className="text-emerald-300 font-mono text-sm sm:text-base font-extrabold">{capitalize(todayFormatted)}</span>
+              <span className="text-emerald-300 font-mono text-sm sm:text-base font-extrabold">
+                {capitalize(todayFormatted)}
+              </span>
             </h3>
           </div>
         </div>
@@ -125,11 +144,16 @@ export const TodaySaleCard: React.FC<TodaySaleCardProps> = ({ todayRec, result }
               className="text-xs text-emerald-400 hover:text-emerald-300 font-semibold p-1 transition-colors"
               title="Copiar precio numérico"
             >
-              {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+              {copied ? (
+                <Check className="w-4 h-4 text-emerald-400" />
+              ) : (
+                <Copy className="w-4 h-4" />
+              )}
             </button>
           </div>
           <p className="text-xs text-emerald-300/90 font-medium leading-relaxed">
-            Sin regalar tu consola/juego: este precio se posiciona en el top 10% más atractivo de Marketplace hoy.
+            Sin regalar tu consola/juego: este precio se posiciona en el top 10% más atractivo de
+            Marketplace hoy.
           </p>
         </div>
 
@@ -140,9 +164,7 @@ export const TodaySaleCard: React.FC<TodaySaleCardProps> = ({ todayRec, result }
               <Clock className="w-3.5 h-3.5 text-cyan-400" />
               Velocidad Estimada de Venta:
             </span>
-            <span className="text-sm font-bold text-white block">
-              {saleVelocity}
-            </span>
+            <span className="text-sm font-bold text-white block">{saleVelocity}</span>
             <span className="text-[11px] text-slate-400">
               Recibirás los primeros mensajes en menos de 3 horas.
             </span>
@@ -154,9 +176,7 @@ export const TodaySaleCard: React.FC<TodaySaleCardProps> = ({ todayRec, result }
               <Calendar className="w-3.5 h-3.5 text-amber-400" />
               Mejor Horario para Publicar Hoy:
             </span>
-            <span className="text-sm font-bold text-amber-300 block">
-              {optimalHours}
-            </span>
+            <span className="text-sm font-bold text-amber-300 block">{optimalHours}</span>
             <span className="text-[11px] text-slate-400">
               Momento de mayor actividad de gamers buscando compras.
             </span>
@@ -169,9 +189,7 @@ export const TodaySaleCard: React.FC<TodaySaleCardProps> = ({ todayRec, result }
               <span className="font-bold text-slate-200 block">
                 Comportamiento de la Categoría Gamer en México:
               </span>
-              <p className="text-slate-300 text-[11px] leading-relaxed mt-0.5">
-                {momentum}
-              </p>
+              <p className="text-slate-300 text-[11px] leading-relaxed mt-0.5">{momentum}</p>
             </div>
           </div>
         </div>

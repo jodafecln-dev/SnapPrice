@@ -1,5 +1,17 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Camera, X, RefreshCw, AlertCircle, Gamepad2, Disc, Tag, Sparkles, Check, HelpCircle, Layers } from 'lucide-react';
+import {
+  Camera,
+  X,
+  RefreshCw,
+  AlertCircle,
+  Gamepad2,
+  Disc,
+  Tag,
+  Sparkles,
+  Check,
+  HelpCircle,
+  Layers,
+} from 'lucide-react';
 import { CameraGuideMode } from '../types';
 
 interface CameraCaptureProps {
@@ -17,11 +29,7 @@ interface CameraCaptureProps {
  * - Control / Mandos: Retícula oval para sticks análogos (revisión de drift y botones).
  * - Etiqueta de Serie: Macro-guía para números de modelo (CFI, CUH, HAC, Model 1888).
  */
-export const CameraCapture: React.FC<CameraCaptureProps> = ({
-  isOpen,
-  onClose,
-  onCapture,
-}) => {
+export const CameraCapture: React.FC<CameraCaptureProps> = ({ isOpen, onClose, onCapture }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
@@ -50,7 +58,7 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({
     setError(null);
     try {
       if (stream) {
-        stream.getTracks().forEach((track) => track.stop());
+        stream.getTracks().forEach(track => track.stop());
       }
       const newStream = await navigator.mediaDevices.getUserMedia({
         video: {
@@ -65,7 +73,9 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({
       }
     } catch (err: any) {
       console.error('Error accessing camera:', err);
-      setError('No se pudo acceder a la cámara. Por favor verifica los permisos del navegador o sube una imagen de la galería.');
+      setError(
+        'No se pudo acceder a la cámara. Por favor verifica los permisos del navegador o sube una imagen de la galería.'
+      );
     }
   };
 
@@ -75,7 +85,7 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({
    */
   const stopCamera = () => {
     if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
+      stream.getTracks().forEach(track => track.stop());
       setStream(null);
     }
   };
@@ -85,7 +95,7 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({
    * Alterna entre la cámara trasera ('environment') y la cámara delantera ('user').
    */
   const switchCamera = () => {
-    setFacingMode((prev) => (prev === 'environment' ? 'user' : 'environment'));
+    setFacingMode(prev => (prev === 'environment' ? 'user' : 'environment'));
   };
 
   /**
@@ -241,7 +251,9 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({
 
               {/* Dynamic Aiming Reticle Overlay */}
               <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-4">
-                <div className={`relative ${guideInfo.shape} flex flex-col items-center justify-between p-3 transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.3)]`}>
+                <div
+                  className={`relative ${guideInfo.shape} flex flex-col items-center justify-between p-3 transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.3)]`}
+                >
                   {/* Corner Crosshairs */}
                   <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-white" />
                   <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-white" />

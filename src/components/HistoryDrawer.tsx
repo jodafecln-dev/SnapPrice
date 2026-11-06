@@ -16,11 +16,13 @@ export const HistoryDrawer: React.FC<HistoryDrawerProps> = ({
   if (history.length === 0) return null;
 
   const formatMXN = (val: number) => {
-    return new Intl.NumberFormat('es-MX', {
-      style: 'currency',
-      currency: 'MXN',
-      maximumFractionDigits: 0,
-    }).format(val) + ' MXN';
+    return (
+      new Intl.NumberFormat('es-MX', {
+        style: 'currency',
+        currency: 'MXN',
+        maximumFractionDigits: 0,
+      }).format(val) + ' MXN'
+    );
   };
 
   return (
@@ -42,7 +44,7 @@ export const HistoryDrawer: React.FC<HistoryDrawerProps> = ({
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        {history.map((item) => (
+        {history.map(item => (
           <button
             key={item.id}
             onClick={() => onSelectHistory(item)}

@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { ShieldCheck, ExternalLink, Calculator, CheckCircle2, AlertTriangle, Eye, ArrowUpRight, Sparkles, Filter } from 'lucide-react';
+import {
+  ShieldCheck,
+  ExternalLink,
+  Calculator,
+  CheckCircle2,
+  AlertTriangle,
+  Eye,
+  ArrowUpRight,
+  Sparkles,
+  Filter,
+} from 'lucide-react';
 import { RealMarketSample, FairMarketCalculation, ValuationResult } from '../types';
 
 interface TransparentMarketPanelProps {
@@ -30,11 +40,13 @@ export const TransparentMarketPanel: React.FC<TransparentMarketPanelProps> = ({
    * Formatea montos en pesos mexicanos ($XX,XXX MXN).
    */
   const formatMXN = (val: number) => {
-    return new Intl.NumberFormat('es-MX', {
-      style: 'currency',
-      currency: 'MXN',
-      maximumFractionDigits: 0,
-    }).format(val) + ' MXN';
+    return (
+      new Intl.NumberFormat('es-MX', {
+        style: 'currency',
+        currency: 'MXN',
+        maximumFractionDigits: 0,
+      }).format(val) + ' MXN'
+    );
   };
 
   // Default samples generator if backend provided none
@@ -83,16 +95,18 @@ export const TransparentMarketPanel: React.FC<TransparentMarketPanelProps> = ({
 
   const displaySamples = samples && samples.length > 0 ? samples : defaultSamples;
 
-  const filteredSamples = filterPlatform === 'all'
-    ? displaySamples
-    : displaySamples.filter((s) => s.platform.toLowerCase().includes(filterPlatform.toLowerCase()));
+  const filteredSamples =
+    filterPlatform === 'all'
+      ? displaySamples
+      : displaySamples.filter(s => s.platform.toLowerCase().includes(filterPlatform.toLowerCase()));
 
   // Default calculation data if not populated
   const displayCalculation: FairMarketCalculation = calculation || {
     sampleCount: 18,
     outliersExcluded: 3,
     medianPrice: marketRadiography.usedAverage,
-    formulaNotes: 'Mediana aritmética de 15 publicaciones válidas tras descartar 2 ganchos fraudulentos (-40% bajo mercado) y 1 sobreprecio de reventa especulativa.',
+    formulaNotes:
+      'Mediana aritmética de 15 publicaciones válidas tras descartar 2 ganchos fraudulentos (-40% bajo mercado) y 1 sobreprecio de reventa especulativa.',
     confidenceScore: 97,
   };
 
@@ -183,12 +197,16 @@ export const TransparentMarketPanel: React.FC<TransparentMarketPanelProps> = ({
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-center font-mono">
           <div className="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800">
-            <span className="text-[10px] text-slate-400 block uppercase">Publicaciones Analizadas</span>
+            <span className="text-[10px] text-slate-400 block uppercase">
+              Publicaciones Analizadas
+            </span>
             <span className="text-sm font-bold text-white">{displayCalculation.sampleCount}</span>
           </div>
           <div className="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800">
             <span className="text-[10px] text-rose-400 block uppercase">Atípicos Descartados</span>
-            <span className="text-sm font-bold text-rose-300">{displayCalculation.outliersExcluded}</span>
+            <span className="text-sm font-bold text-rose-300">
+              {displayCalculation.outliersExcluded}
+            </span>
           </div>
           <div className="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800">
             <span className="text-[10px] text-emerald-400 block uppercase">Rango Sano MXN</span>
@@ -198,7 +216,9 @@ export const TransparentMarketPanel: React.FC<TransparentMarketPanelProps> = ({
           </div>
           <div className="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800">
             <span className="text-[10px] text-cyan-400 block uppercase">Índice Confianza</span>
-            <span className="text-sm font-bold text-cyan-300">{displayCalculation.confidenceScore}%</span>
+            <span className="text-sm font-bold text-cyan-300">
+              {displayCalculation.confidenceScore}%
+            </span>
           </div>
         </div>
       </div>
@@ -222,10 +242,10 @@ export const TransparentMarketPanel: React.FC<TransparentMarketPanelProps> = ({
                       sample.platform.includes('Mercado Libre')
                         ? 'bg-amber-950/60 text-amber-300 border-amber-500/40'
                         : sample.platform.includes('Marketplace')
-                        ? 'bg-sky-950/60 text-sky-300 border-sky-500/40'
-                        : sample.platform.includes('Amazon')
-                        ? 'bg-orange-950/60 text-orange-300 border-orange-500/40'
-                        : 'bg-purple-950/60 text-purple-300 border-purple-500/40'
+                          ? 'bg-sky-950/60 text-sky-300 border-sky-500/40'
+                          : sample.platform.includes('Amazon')
+                            ? 'bg-orange-950/60 text-orange-300 border-orange-500/40'
+                            : 'bg-purple-950/60 text-purple-300 border-purple-500/40'
                     }`}
                   >
                     {sample.platform}

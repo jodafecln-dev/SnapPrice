@@ -14,21 +14,32 @@ import { HistoryDrawer } from './components/HistoryDrawer';
 import { AntiFraudSection } from './components/AntiFraudSection';
 import { ValuationResult, UserIntent, ProductCondition, HistoryItem } from './types';
 import { SAMPLE_PRODUCTS, SampleItem } from './data/samples';
-import { 
-  auth, 
-  loginWithGoogle, 
-  logoutUser, 
-  saveValuationToCloud, 
+import { evaluateProduct } from './services/api';
+import {
+  auth,
+  loginWithGoogle,
+  logoutUser,
+  saveValuationToCloud,
   fetchUserValuationsFromCloud,
   deleteValuationFromCloud,
-  testFirestoreConnection
+  testFirestoreConnection,
 } from './lib/firebase';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { Sparkles, AlertCircle, RefreshCw, ArrowUp, CloudCheck, Camera, ArrowRight } from 'lucide-react';
+import {
+  Sparkles,
+  AlertCircle,
+  RefreshCw,
+  ArrowUp,
+  CloudCheck,
+  Camera,
+  ArrowRight,
+} from 'lucide-react';
 
 export default function App() {
   const [userIntent, setUserIntent] = useState<UserIntent>('c2c');
-  const [currentResult, setCurrentResult] = useState<ValuationResult>(SAMPLE_PRODUCTS[0].initialResult);
+  const [currentResult, setCurrentResult] = useState<ValuationResult>(
+    SAMPLE_PRODUCTS[0].initialResult
+  );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isRecalculating, setIsRecalculating] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -91,11 +102,18 @@ export default function App() {
         try {
           const cloudValuations = await fetchUserValuationsFromCloud(user.uid);
           if (cloudValuations && cloudValuations.length > 0) {
-            setHistory((prev) => {
-              const combined = [...cloudValuations, ...prev.filter((p: HistoryItem) => !cloudValuations.some((c: HistoryItem) => c.id === p.id))];
+            setHistory(prev => {
+              const combined = [
+                ...cloudValuations,
+                ...prev.filter(
+                  (p: HistoryItem) => !cloudValuations.some((c: HistoryItem) => c.id === p.id)
+                ),
+              ];
               return combined.slice(0, 20);
             });
-            showNotification(`¡Bienvenido ${user.displayName || 'a SnapPrice'}! Valuaciones sincronizadas con Firestore.`);
+            showNotification(
+              `¡Bienvenido ${user.displayName || 'a SnapPrice'}! Valuaciones sincronizadas con Firestore.`
+            );
           }
         } catch (e) {
           console.warn('Could not sync cloud history:', e);
@@ -146,11 +164,15 @@ export default function App() {
         return;
       }
       if (code === 'auth/popup-blocked') {
-        setErrorMessage('El navegador bloqueó la ventana emergente de Google. Por favor autoriza las ventanas emergentes en tu navegador para continuar.');
+        setErrorMessage(
+          'El navegador bloqueó la ventana emergente de Google. Por favor autoriza las ventanas emergentes en tu navegador para continuar.'
+        );
         return;
       }
       console.warn('Detalle de autenticación:', err?.message || err);
-      setErrorMessage('No se pudo iniciar sesión con Google: ' + (err?.message || 'Error de conexión'));
+      setErrorMessage(
+        'No se pudo iniciar sesión con Google: ' + (err?.message || 'Error de conexión')
+      );
     } finally {
       setIsLoggingIn(false);
     }
@@ -175,7 +197,7 @@ export default function App() {
    * backend (/api/evaluate), procesa la respuesta de Gemini o fallback matemático,
    * actualiza los componentes de mercado, registra en el historial local y, si el usuario
    * está autenticado, sincroniza de forma transparente con Cloud Firestore.
-   * 
+   *
    * @param {Object} data - Parámetros de valuación con imagen opcional, descripción, intención y condición.
    */
   const handleEvaluate = async (data: {
@@ -189,21 +211,10 @@ export default function App() {
     setErrorMessage(null);
 
     try {
-      const response = await fetch('/api/evaluate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...data,
-          microAnswers,
-        }),
+      const result = await evaluateProduct({
+        ...data,
+        microAnswers,
       });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `Error del servidor: ${response.status}`);
-      }
-
-      const result: ValuationResult = await response.json();
       if (data.imageBase64) {
         result.imagePreviewUrl = data.imageBase64;
       }
@@ -212,7 +223,7 @@ export default function App() {
       // Reset micro-check answers for new product
       const newAnswers: Record<string, string> = {};
       if (result.microCheck) {
-        result.microCheck.forEach((q) => {
+        result.microCheck.forEach(q => {
           if (q.selectedAnswer) {
             newAnswers[q.id] = q.selectedAnswer;
           }
@@ -232,11 +243,11 @@ export default function App() {
         imageUrl: result.imagePreviewUrl,
         result,
       };
-      setHistory((prev) => [newHistoryItem, ...prev.slice(0, 19)]);
+      setHistory(prev => [newHistoryItem, ...prev.slice(0, 19)]);
 
       // If user is authenticated, persist to Firestore cloud database
       if (currentUser?.uid) {
-        saveValuationToCloud(currentUser.uid, newHistoryItem).catch((e) =>
+        saveValuationToCloud(currentUser.uid, newHistoryItem).catch(e =>
           console.warn('Failed saving to Firestore in background:', e)
         );
       }
@@ -249,7 +260,8 @@ export default function App() {
     } catch (err: any) {
       console.warn('Aviso en cotización:', err?.message || err);
       setErrorMessage(
-        err.message || 'No se pudo completar la valuación. Por favor intenta con una descripción más detallada o verifica tu conexión.'
+        err.message ||
+          'No se pudo completar la valuación. Por favor intenta con una descripción más detallada o verifica tu conexión.'
       );
     } finally {
       setIsLoading(false);
@@ -272,7 +284,9 @@ export default function App() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          imageBase64: currentResult.imagePreviewUrl?.startsWith('data:') ? currentResult.imagePreviewUrl : undefined,
+          imageBase64: currentResult.imagePreviewUrl?.startsWith('data:')
+            ? currentResult.imagePreviewUrl
+            : undefined,
           description: `${currentResult.product.exactName} - Respuestas adicionales: ${JSON.stringify(microAnswers)}`,
           userIntent,
           microAnswers,
@@ -293,35 +307,49 @@ export default function App() {
       // Fallback: apply client-side mathematical adjustment so user gets instant responsive feedback
       const cloned = JSON.parse(JSON.stringify(currentResult)) as ValuationResult;
       let multiplier = 1.0;
-      Object.values(microAnswers).forEach((val) => {
+      Object.values(microAnswers).forEach(val => {
         if (val.includes('256 GB')) multiplier += 0.08;
         if (val.includes('512 GB')) multiplier += 0.16;
         if (val.includes('1 TB')) multiplier += 0.22;
         if (val.includes('2 Controles')) multiplier += 0.12;
         if (val.includes('Sin control')) multiplier -= 0.12;
-        if (val.includes('Con Lector') || val.includes('Estándar')) multiplier += 0.10;
+        if (val.includes('Con Lector') || val.includes('Estándar')) multiplier += 0.1;
         if (val.includes('Digital')) multiplier -= 0.08;
         if (val.includes('Sin drift') || val.includes('100% calibrados')) multiplier += 0.05;
-        if (val.includes('Drift') || val.includes('drift')) multiplier -= 0.10;
+        if (val.includes('Drift') || val.includes('drift')) multiplier -= 0.1;
         if (val.includes('Con caja') || val.includes('Caja +')) multiplier += 0.06;
-        if (val.includes('Solo consola') || val.includes('Solo equipo') || val.includes('suelto')) multiplier -= 0.08;
+        if (val.includes('Solo consola') || val.includes('Solo equipo') || val.includes('suelto'))
+          multiplier -= 0.08;
       });
 
-      cloned.marketRadiography.usedAverage = Math.round(cloned.marketRadiography.usedAverage * multiplier);
+      cloned.marketRadiography.usedAverage = Math.round(
+        cloned.marketRadiography.usedAverage * multiplier
+      );
       cloned.marketRadiography.usedMin = Math.round(cloned.marketRadiography.usedMin * multiplier);
       cloned.marketRadiography.usedMax = Math.round(cloned.marketRadiography.usedMax * multiplier);
-      cloned.marketRadiography.platformEstimates.mercadoLibre = Math.round(cloned.marketRadiography.usedAverage * 1.05);
-      cloned.marketRadiography.platformEstimates.marketplace = Math.round(cloned.marketRadiography.usedAverage * 0.95);
-      cloned.marketRadiography.platformEstimates.amazon = Math.round((cloned.marketRadiography.retailNewMin || cloned.marketRadiography.usedAverage * 1.3) * 0.92);
+      cloned.marketRadiography.platformEstimates.mercadoLibre = Math.round(
+        cloned.marketRadiography.usedAverage * 1.05
+      );
+      cloned.marketRadiography.platformEstimates.marketplace = Math.round(
+        cloned.marketRadiography.usedAverage * 0.95
+      );
+      cloned.marketRadiography.platformEstimates.amazon = Math.round(
+        (cloned.marketRadiography.retailNewMin || cloned.marketRadiography.usedAverage * 1.3) * 0.92
+      );
 
       cloned.strategies.c2c.fastSalePrice = Math.round(cloned.marketRadiography.usedAverage * 0.82);
       cloned.strategies.c2c.fairPrice = cloned.marketRadiography.usedAverage;
       cloned.strategies.c2c.patientSalePrice = cloned.marketRadiography.usedMax;
-      cloned.strategies.flipping.maxPurchasePrice = Math.round(cloned.marketRadiography.usedAverage * 0.45);
-      cloned.strategies.flipping.grossProfit = cloned.marketRadiography.usedAverage - cloned.strategies.flipping.maxPurchasePrice;
+      cloned.strategies.flipping.maxPurchasePrice = Math.round(
+        cloned.marketRadiography.usedAverage * 0.45
+      );
+      cloned.strategies.flipping.grossProfit =
+        cloned.marketRadiography.usedAverage - cloned.strategies.flipping.maxPurchasePrice;
       cloned.strategies.buyer.targetMin = cloned.marketRadiography.usedMin;
       cloned.strategies.buyer.targetMax = cloned.marketRadiography.usedAverage;
-      cloned.strategies.buyer.scamWarningThreshold = Math.round(cloned.marketRadiography.usedAverage * 0.6);
+      cloned.strategies.buyer.scamWarningThreshold = Math.round(
+        cloned.marketRadiography.usedAverage * 0.6
+      );
 
       if (cloned.todayRecommendation) {
         cloned.todayRecommendation.recommendedSellPriceToday = cloned.strategies.c2c.fastSalePrice;
@@ -343,7 +371,7 @@ export default function App() {
   const handleSelectSample = (sample: SampleItem) => {
     setCurrentResult(sample.initialResult);
     const initialAnswers: Record<string, string> = {};
-    sample.initialResult.microCheck.forEach((q) => {
+    sample.initialResult.microCheck.forEach(q => {
       if (q.selectedAnswer) initialAnswers[q.id] = q.selectedAnswer;
     });
     setMicroAnswers(initialAnswers);
@@ -535,7 +563,7 @@ export default function App() {
               result={currentResult}
               onOpenReportModal={() => setIsReportModalOpen(true)}
               onOpenStoryModal={() => setIsStoryModalOpen(true)}
-              onRevaluateWithCondition={(cond) => {
+              onRevaluateWithCondition={cond => {
                 const updated = { ...currentResult };
                 updated.product.apparentCondition = cond;
                 setCurrentResult(updated);
@@ -543,10 +571,7 @@ export default function App() {
             />
 
             {/* Sugerencia de Venta al Día de Hoy */}
-            <TodaySaleCard
-              todayRec={currentResult.todayRecommendation}
-              result={currentResult}
-            />
+            <TodaySaleCard todayRec={currentResult.todayRecommendation} result={currentResult} />
 
             {/* Micro-Check Bar (Pillar 2: Preguntas de Desempate) */}
             {currentResult.microCheck && currentResult.microCheck.length > 0 && (
@@ -554,7 +579,7 @@ export default function App() {
                 questions={currentResult.microCheck}
                 answers={microAnswers}
                 onSelectAnswer={(qid, ans) => {
-                  setMicroAnswers((prev) => ({ ...prev, [qid]: ans }));
+                  setMicroAnswers(prev => ({ ...prev, [qid]: ans }));
                 }}
                 onRecalculate={handleRecalculateMicro}
                 isRecalculating={isRecalculating}

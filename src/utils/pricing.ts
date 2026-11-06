@@ -31,7 +31,7 @@ export function filterMarketOutliers(
     return { cleanPrices: [benchmarkEstimate], outliersCount: 0 };
   }
 
-  const minThreshold = benchmarkEstimate * 0.60; // -40% (umbral de alerta de estafa)
+  const minThreshold = benchmarkEstimate * 0.6; // -40% (umbral de alerta de estafa)
   const maxThreshold = benchmarkEstimate * 1.45; // +45% (umbral de sobreprecio especulativo)
 
   const cleanPrices = prices.filter(p => p >= minThreshold && p <= maxThreshold);
@@ -72,7 +72,7 @@ export function calculateFairMarketPricing(
   const fastSalePrice = Math.round((medianFMV * 0.85) / 50) * 50;
 
   // Venta con paciencia (1-3 semanas): 10% por encima de la mediana
-  const patientSalePrice = Math.round((medianFMV * 1.10) / 50) * 50;
+  const patientSalePrice = Math.round((medianFMV * 1.1) / 50) * 50;
 
   return {
     medianFMV,

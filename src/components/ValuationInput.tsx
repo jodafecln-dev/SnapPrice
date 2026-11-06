@@ -1,19 +1,19 @@
 import React, { useState, useRef } from 'react';
-import { 
-  Camera, 
-  Upload, 
-  Search, 
-  Sparkles, 
-  X, 
-  Image as ImageIcon, 
-  Zap, 
-  Tag, 
-  Briefcase, 
-  ShoppingCart, 
+import {
+  Camera,
+  Upload,
+  Search,
+  Sparkles,
+  X,
+  Image as ImageIcon,
+  Zap,
+  Tag,
+  Briefcase,
+  ShoppingCart,
   TrendingUp,
   Sliders,
   CheckCircle2,
-  Flame
+  Flame,
 } from 'lucide-react';
 import { UserIntent, ProductCondition } from '../types';
 import { SAMPLE_PRODUCTS, SampleItem } from '../data/samples';
@@ -67,7 +67,7 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
    * Lee la imagen y aplica compresión y escalado en cliente mediante un elemento Canvas
    * a una dimensión máxima de 1280px con compresión JPEG al 88%.
    * Previene errores de payload excesivo (HTTP 413) y optimiza la velocidad de red.
-   * 
+   *
    * @param {File} file - Archivo de imagen seleccionado o arrastrado.
    */
   const processFile = (file: File) => {
@@ -79,7 +79,7 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
     }
 
     const reader = new FileReader();
-    reader.onload = (event) => {
+    reader.onload = event => {
       const img = new Image();
       img.onload = () => {
         const maxDimension = 1280;
@@ -206,7 +206,9 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
             }`}
           >
             <div className="flex items-center justify-between mb-1.5">
-              <Tag className={`w-4 h-4 ${userIntent === 'c2c' ? 'text-emerald-300' : 'text-slate-400'}`} />
+              <Tag
+                className={`w-4 h-4 ${userIntent === 'c2c' ? 'text-emerald-300' : 'text-slate-400'}`}
+              />
               {userIntent === 'c2c' && (
                 <span className="text-[10px] font-mono font-bold text-emerald-300 bg-emerald-950/90 border border-emerald-500/40 px-2 py-0.5 rounded-full">
                   Recomendado
@@ -214,7 +216,9 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
               )}
             </div>
             <span className="text-xs font-extrabold block">Quiero Vender</span>
-            <span className="text-[11px] text-slate-400 leading-tight">Sácale más lana sin malbaratar</span>
+            <span className="text-[11px] text-slate-400 leading-tight">
+              Sácale más lana sin malbaratar
+            </span>
           </button>
 
           <button
@@ -227,7 +231,9 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
             }`}
           >
             <div className="flex items-center justify-between mb-1.5">
-              <Briefcase className={`w-4 h-4 ${userIntent === 'flipping' ? 'text-purple-300' : 'text-slate-400'}`} />
+              <Briefcase
+                className={`w-4 h-4 ${userIntent === 'flipping' ? 'text-purple-300' : 'text-slate-400'}`}
+              />
               {userIntent === 'flipping' && (
                 <span className="text-[10px] font-mono font-bold text-purple-300 bg-purple-950/90 border border-purple-500/40 px-2 py-0.5 rounded-full">
                   Flipping Pro
@@ -235,7 +241,9 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
               )}
             </div>
             <span className="text-xs font-extrabold block">Comprar y Revender</span>
-            <span className="text-[11px] text-slate-400 leading-tight">Calcula margen del 100%</span>
+            <span className="text-[11px] text-slate-400 leading-tight">
+              Calcula margen del 100%
+            </span>
           </button>
 
           <button
@@ -248,7 +256,9 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
             }`}
           >
             <div className="flex items-center justify-between mb-1.5">
-              <ShoppingCart className={`w-4 h-4 ${userIntent === 'buyer' ? 'text-cyan-300' : 'text-slate-400'}`} />
+              <ShoppingCart
+                className={`w-4 h-4 ${userIntent === 'buyer' ? 'text-cyan-300' : 'text-slate-400'}`}
+              />
               {userIntent === 'buyer' && (
                 <span className="text-[10px] font-mono font-bold text-cyan-300 bg-cyan-950/90 border border-cyan-500/40 px-2 py-0.5 rounded-full">
                   Compra Segura
@@ -256,7 +266,9 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
               )}
             </div>
             <span className="text-xs font-extrabold block">Quiero Comprar</span>
-            <span className="text-[11px] text-slate-400 leading-tight">Paga lo justo y evita fraudes</span>
+            <span className="text-[11px] text-slate-400 leading-tight">
+              Paga lo justo y evita fraudes
+            </span>
           </button>
 
           <button
@@ -269,7 +281,9 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
             }`}
           >
             <div className="flex items-center justify-between mb-1.5">
-              <TrendingUp className={`w-4 h-4 ${userIntent === 'research' ? 'text-amber-300' : 'text-slate-400'}`} />
+              <TrendingUp
+                className={`w-4 h-4 ${userIntent === 'research' ? 'text-amber-300' : 'text-slate-400'}`}
+              />
               {userIntent === 'research' && (
                 <span className="text-[10px] font-mono font-bold text-amber-300 bg-amber-950/90 border border-amber-500/40 px-2 py-0.5 rounded-full">
                   Tendencias
@@ -299,8 +313,8 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
                 isDragging
                   ? 'border-emerald-400 bg-emerald-500/15 shadow-[0_0_25px_rgba(16,185,129,0.3)]'
                   : selectedImage
-                  ? 'border-emerald-500/60 bg-slate-950 shadow-[0_0_20px_rgba(16,185,129,0.2)]'
-                  : 'border-slate-700/80 bg-slate-950/50 hover:border-emerald-500/40'
+                    ? 'border-emerald-500/60 bg-slate-950 shadow-[0_0_20px_rgba(16,185,129,0.2)]'
+                    : 'border-slate-700/80 bg-slate-950/50 hover:border-emerald-500/40'
               }`}
             >
               <input
@@ -327,7 +341,8 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
                     <X className="w-4 h-4" />
                   </button>
                   <span className="text-xs text-emerald-400 font-semibold mt-2 flex items-center gap-1.5">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Foto lista para valuación
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Foto lista para
+                    valuación
                   </span>
                 </div>
               ) : (
@@ -369,9 +384,9 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
             {fileError && (
               <div className="p-2.5 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs flex items-center justify-between">
                 <span>{fileError}</span>
-                <button 
-                  type="button" 
-                  onClick={() => setFileError(null)} 
+                <button
+                  type="button"
+                  onClick={() => setFileError(null)}
                   className="text-rose-400 hover:text-white ml-2 text-xs font-bold"
                 >
                   ✕
@@ -389,7 +404,7 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
                 <textarea
                   rows={3}
                   value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  onChange={e => setDescription(e.target.value)}
                   placeholder="Ej: PlayStation 5 Slim 1TB Estándar con 1 control DualSense blanco y caja, o Nintendo Switch OLED..."
                   className="w-full bg-slate-950/80 border border-slate-800 rounded-2xl p-3 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/40 transition-all resize-none"
                 />
@@ -410,12 +425,12 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
                       'Sin Drift al 100%',
                       '2 Controles',
                       'Juego Físico',
-                    ].map((pill) => (
+                    ].map(pill => (
                       <button
                         key={pill}
                         type="button"
                         onClick={() => {
-                          setDescription((prev) =>
+                          setDescription(prev =>
                             prev.includes(pill) ? prev : prev ? `${prev}, ${pill}` : pill
                           );
                         }}
@@ -451,7 +466,7 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
                   >
                     Automático
                   </button>
-                  {conditions.map((c) => (
+                  {conditions.map(c => (
                     <button
                       key={c.label}
                       type="button"
@@ -476,7 +491,9 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
           <div className="text-xs text-slate-400 flex items-center gap-2">
             <span>Rastreo activo:</span>
-            <span className="text-slate-200 font-medium">Mercado Libre MX · Marketplace · Amazon México</span>
+            <span className="text-slate-200 font-medium">
+              Mercado Libre MX · Marketplace · Amazon México
+            </span>
           </div>
 
           <button
@@ -503,14 +520,14 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
       <div id="catalogo-demos" className="pt-5 border-t border-slate-800/80 space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-            <Zap className="w-3.5 h-3.5 text-amber-400" />
-            O prueba 1 clic con estos productos populares en México:
+            <Zap className="w-3.5 h-3.5 text-amber-400" />O prueba 1 clic con estos productos
+            populares en México:
           </span>
           <span className="text-[11px] text-emerald-400 font-semibold">1 clic para cotizar</span>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {SAMPLE_PRODUCTS.map((sample) => (
+          {SAMPLE_PRODUCTS.map(sample => (
             <button
               key={sample.id}
               type="button"
@@ -533,7 +550,8 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
                   {sample.name}
                 </span>
                 <span className="text-[11px] font-mono text-emerald-400 font-bold block mt-0.5">
-                  Promedio: ${sample.initialResult.marketRadiography.usedAverage.toLocaleString('es-MX')} MXN
+                  Promedio: $
+                  {sample.initialResult.marketRadiography.usedAverage.toLocaleString('es-MX')} MXN
                 </span>
               </div>
             </button>

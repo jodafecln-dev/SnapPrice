@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import { X, Copy, Check, FileText, Printer, MessageCircle, Award, ShieldCheck, Sparkles, QrCode } from 'lucide-react';
+import {
+  X,
+  Copy,
+  Check,
+  FileText,
+  Printer,
+  MessageCircle,
+  Award,
+  ShieldCheck,
+  Sparkles,
+  QrCode,
+} from 'lucide-react';
 import { ValuationResult, UserIntent } from '../types';
 
 interface ReportModalProps {
@@ -242,9 +253,15 @@ Valuado con visión artificial e inteligencia de mercado SnapPrice MX 🚀`;
                   </h2>
                 </div>
                 <div className="text-left sm:text-right font-mono text-xs">
-                  <span className="text-slate-400 print:text-gray-600 block">Folio de Registro:</span>
-                  <span className="text-emerald-300 print:text-black font-extrabold text-sm">{folioNumber}</span>
-                  <span className="text-[10px] text-slate-500 print:text-gray-500 block">{formattedDate}</span>
+                  <span className="text-slate-400 print:text-gray-600 block">
+                    Folio de Registro:
+                  </span>
+                  <span className="text-emerald-300 print:text-black font-extrabold text-sm">
+                    {folioNumber}
+                  </span>
+                  <span className="text-[10px] text-slate-500 print:text-gray-500 block">
+                    {formattedDate}
+                  </span>
                 </div>
               </div>
 
@@ -314,7 +331,9 @@ Valuado con visión artificial e inteligencia de mercado SnapPrice MX 🚀`;
               <div className="pt-4 border-t border-slate-800 print:border-gray-300 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
                 <div className="space-y-1 text-slate-400 print:text-gray-600 max-w-sm">
                   <p className="text-[11px] leading-relaxed">
-                    Este documento certifica que el valor comercial ha sido calculado analizando transacciones reales en Mercado Libre México, Facebook Marketplace y Amazon México.
+                    Este documento certifica que el valor comercial ha sido calculado analizando
+                    transacciones reales en Mercado Libre México, Facebook Marketplace y Amazon
+                    México.
                   </p>
                   <span className="text-[10px] font-mono text-emerald-400 print:text-black block">
                     Hash Verificación: SHA256-SNAP-{folioNumber}

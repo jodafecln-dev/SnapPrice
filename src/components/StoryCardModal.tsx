@@ -1,5 +1,14 @@
 import React, { useState, useRef } from 'react';
-import { X, Download, MessageCircle, Share2, Smartphone, Check, Sparkles, ShieldCheck } from 'lucide-react';
+import {
+  X,
+  Download,
+  MessageCircle,
+  Share2,
+  Smartphone,
+  Check,
+  Sparkles,
+  ShieldCheck,
+} from 'lucide-react';
 import { ValuationResult, UserIntent } from '../types';
 
 interface StoryCardModalProps {
@@ -132,7 +141,7 @@ export const StoryCardModal: React.FC<StoryCardModalProps> = ({
             img.crossOrigin = 'anonymous';
           }
           img.src = imagePreviewUrl;
-          await new Promise((resolve) => {
+          await new Promise(resolve => {
             img.onload = resolve;
             img.onerror = resolve;
             setTimeout(resolve, 2500);
@@ -167,7 +176,10 @@ export const StoryCardModal: React.FC<StoryCardModalProps> = ({
       ctx.fillStyle = '#ffffff';
       ctx.font = '800 52px system-ui, sans-serif';
       ctx.textAlign = 'center';
-      const cleanName = product.exactName.length > 38 ? product.exactName.substring(0, 35) + '...' : product.exactName;
+      const cleanName =
+        product.exactName.length > 38
+          ? product.exactName.substring(0, 35) + '...'
+          : product.exactName;
       ctx.fillText(cleanName, 540, 990);
 
       // Categoría / Marca
@@ -264,7 +276,11 @@ export const StoryCardModal: React.FC<StoryCardModalProps> = ({
       // Convertir a DataURL y descargar
       const dataUrl = canvas.toDataURL('image/png');
       const link = document.createElement('a');
-      link.download = `snapprice-${product.brand.toLowerCase()}-${product.model.toLowerCase()}-historia.png`.replace(/\s+/g, '-');
+      link.download =
+        `snapprice-${product.brand.toLowerCase()}-${product.model.toLowerCase()}-historia.png`.replace(
+          /\s+/g,
+          '-'
+        );
       link.href = dataUrl;
       link.click();
 
@@ -312,7 +328,8 @@ ${contactInfo ? `📲 Contacto directo: ${contactInfo}\n` : ''}¿Te interesa? ¡
                 Ficha para Historias de WhatsApp e Instagram (9:16)
               </h3>
               <p className="text-xs text-slate-400">
-                Crea una imagen llamativa con tu foto y precio para publicar en tus estados en 1 clic.
+                Crea una imagen llamativa con tu foto y precio para publicar en tus estados en 1
+                clic.
               </p>
             </div>
           </div>
@@ -395,9 +412,7 @@ ${contactInfo ? `📲 Contacto directo: ${contactInfo}\n` : ''}¿Te interesa? ¡
                 <span className="text-[10px] font-bold text-white block truncate">
                   {contactInfo.trim() || 'WhatsApp / Inbox Disponible'}
                 </span>
-                <span className="text-[8px] text-slate-400 block truncate">
-                  {cityLocation}
-                </span>
+                <span className="text-[8px] text-slate-400 block truncate">{cityLocation}</span>
               </div>
             </div>
           </div>
@@ -466,7 +481,7 @@ ${contactInfo ? `📲 Contacto directo: ${contactInfo}\n` : ''}¿Te interesa? ¡
                     <input
                       type="number"
                       value={customPrice}
-                      onChange={(e) => setCustomPrice(Number(e.target.value))}
+                      onChange={e => setCustomPrice(Number(e.target.value))}
                       placeholder="Escribe tu precio..."
                       className="w-full bg-slate-950 border border-slate-700 rounded-xl pl-7 pr-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-mono"
                     />
@@ -484,14 +499,14 @@ ${contactInfo ? `📲 Contacto directo: ${contactInfo}\n` : ''}¿Te interesa? ¡
                 <input
                   type="text"
                   value={contactInfo}
-                  onChange={(e) => setContactInfo(e.target.value)}
+                  onChange={e => setContactInfo(e.target.value)}
                   placeholder="Ej. WhatsApp: 55 1234 5678"
                   className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400"
                 />
                 <input
                   type="text"
                   value={cityLocation}
-                  onChange={(e) => setCityLocation(e.target.value)}
+                  onChange={e => setCityLocation(e.target.value)}
                   placeholder="Ej. CDMX / Metro Zapata"
                   className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400"
                 />

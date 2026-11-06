@@ -41,8 +41,13 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
           <div>
             <span className="text-lg font-extrabold tracking-tight text-white whitespace-nowrap">
-              Snap<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 drop-shadow-[0_0_12px_rgba(52,211,153,0.4)]">Price</span>
-              <span className="text-[10px] font-bold tracking-widest uppercase text-emerald-300 ml-1.5 px-1.5 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-500/40">MX</span>
+              Snap
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 drop-shadow-[0_0_12px_rgba(52,211,153,0.4)]">
+                Price
+              </span>
+              <span className="text-[10px] font-bold tracking-widest uppercase text-emerald-300 ml-1.5 px-1.5 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-500/40">
+                MX
+              </span>
             </span>
             <span className="hidden sm:inline-block text-[10px] font-mono text-cyan-300 bg-cyan-950/70 border border-cyan-700/60 px-2 py-0.5 rounded-full ml-2">
               🎮 Videojuegos & Consolas
@@ -55,7 +60,9 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={() => onNavigateSection('valuador')}
             className={`whitespace-nowrap shrink-0 transition-colors ${
-              activeSection === 'valuador' ? 'text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]' : 'hover:text-emerald-300'
+              activeSection === 'valuador'
+                ? 'text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]'
+                : 'hover:text-emerald-300'
             }`}
           >
             Valuador Pro
@@ -63,7 +70,9 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={() => onNavigateSection('catalogo')}
             className={`whitespace-nowrap shrink-0 transition-colors ${
-              activeSection === 'catalogo' ? 'text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]' : 'hover:text-emerald-300'
+              activeSection === 'catalogo'
+                ? 'text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]'
+                : 'hover:text-emerald-300'
             }`}
           >
             Top Ejemplos
@@ -71,7 +80,9 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={() => onNavigateSection('flipping')}
             className={`whitespace-nowrap shrink-0 transition-colors ${
-              activeSection === 'flipping' ? 'text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]' : 'hover:text-emerald-300'
+              activeSection === 'flipping'
+                ? 'text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]'
+                : 'hover:text-emerald-300'
             }`}
           >
             Calculadora de Ganancias
@@ -79,7 +90,9 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={() => onNavigateSection('antifraude')}
             className={`whitespace-nowrap shrink-0 transition-colors ${
-              activeSection === 'antifraude' ? 'text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]' : 'hover:text-emerald-300'
+              activeSection === 'antifraude'
+                ? 'text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]'
+                : 'hover:text-emerald-300'
             }`}
           >
             Radar Anti-Estafas

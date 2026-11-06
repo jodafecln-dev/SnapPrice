@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import { GoogleGenAI, Type } from '@google/genai';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { generateHeuristicValuation } from './src/utils/heuristics';
+import { validateImageMagicBytes } from './src/utils/imageSecurity';
 
 dotenv.config();
 
@@ -82,304 +84,8 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-/**
- * generateHeuristicValuation
- * Motor algorítmico matemático de respaldo. Calcula cotizaciones coherentes
- * en el mercado mexicano (MXN) basadas en catálogo de palabras clave y estado
- * físico cuando la API de Gemini externa no está disponible o se agota la cuota.
- * 
- * @param {string} description - Texto descriptivo o nombre del producto ingresado.
- * @param {string} userIntent - Objetivo ('c2c' | 'flipping' | 'buyer' | 'research').
- * @param {string} condition - Estado físico ('Nuevo' | 'Como nuevo' | 'Usado - Bueno' | 'Desgaste visible' | 'Dañado').
- * @param {Record<string, string>} microAnswers - Respuestas previas a preguntas de desempate.
- * @returns {ValuationResult} Objeto estructurado con radiografía, estrategias y reporte.
- */
-function generateHeuristicValuation(
-  description: string,
-  userIntent: string,
-  condition: string = 'Usado - Bueno',
-  microAnswers: Record<string, string> = {}
-) {
-  const descLower = description.toLowerCase();
-  
-  // Estimate baseline retail price based on detected product keywords
-  let baseRetail = 12000;
-  let brand = 'Genérico';
-  let model = description || 'Artículo analizado';
-  let category = 'Artículos Varios';
+// Motor algorítmico y enriquecimiento modularizado en ./src/utils/heuristics.ts
 
-  if (descLower.includes('playstation 5 pro') || descLower.includes('ps5 pro')) {
-    baseRetail = 18999;
-    brand = 'Sony';
-    model = 'PlayStation 5 Pro (2TB SSD)';
-    category = 'Consolas de Videojuegos';
-  } else if (descLower.includes('playstation 5 slim') || descLower.includes('ps5 slim')) {
-    baseRetail = 11499;
-    brand = 'Sony';
-    model = 'PlayStation 5 Slim (1TB)';
-    category = 'Consolas de Videojuegos';
-  } else if (descLower.includes('playstation 5') || descLower.includes('ps5')) {
-    baseRetail = 10499;
-    brand = 'Sony';
-    model = 'PlayStation 5';
-    category = 'Consolas de Videojuegos';
-  } else if (descLower.includes('playstation 4') || descLower.includes('ps4 pro') || descLower.includes('ps4')) {
-    baseRetail = 5999;
-    brand = 'Sony';
-    model = 'PlayStation 4';
-    category = 'Consolas de Videojuegos';
-  } else if (descLower.includes('xbox series x')) {
-    baseRetail = 11999;
-    brand = 'Microsoft';
-    model = 'Xbox Series X (1TB)';
-    category = 'Consolas de Videojuegos';
-  } else if (descLower.includes('xbox series s')) {
-    baseRetail = 6499;
-    brand = 'Microsoft';
-    model = 'Xbox Series S (512GB/1TB)';
-    category = 'Consolas de Videojuegos';
-  } else if (descLower.includes('nintendo switch oled')) {
-    baseRetail = 7499;
-    brand = 'Nintendo';
-    model = 'Nintendo Switch OLED (64GB)';
-    category = 'Consolas';
-  } else if (descLower.includes('nintendo switch lite')) {
-    baseRetail = 4299;
-    brand = 'Nintendo';
-    model = 'Nintendo Switch Lite';
-    category = 'Consolas Portátiles';
-  } else if (descLower.includes('nintendo switch')) {
-    baseRetail = 6299;
-    brand = 'Nintendo';
-    model = 'Nintendo Switch';
-    category = 'Consolas';
-  } else if (descLower.includes('zelda') || descLower.includes('mario') || descLower.includes('pokemon') || descLower.includes('pokémon') || descLower.includes('juego')) {
-    baseRetail = 1399;
-    brand = 'Nintendo / PlayStation';
-    model = description || 'Juego Físico Original';
-    category = 'Videojuegos Físicos';
-  } else if (descLower.includes('dualsense') || descLower.includes('control') || descLower.includes('mando')) {
-    baseRetail = 1599;
-    brand = 'Sony / Xbox';
-    model = description || 'Mando Inalámbrico Original';
-    category = 'Accesorios Gamer';
-  } else if (descLower.includes('iphone 15') || descLower.includes('iphone 14') || descLower.includes('iphone 13')) {
-    baseRetail = 18999;
-    brand = 'Apple';
-    model = description || 'iPhone';
-    category = 'Smartphones';
-  }
-
-  // Adjust for condition
-  let conditionFactor = 0.60;
-  if (condition === 'Nuevo') conditionFactor = 0.88;
-  else if (condition === 'Como nuevo') conditionFactor = 0.72;
-  else if (condition === 'Usado - Bueno') conditionFactor = 0.58;
-  else if (condition === 'Desgaste visible') conditionFactor = 0.44;
-  else if (condition === 'Dañado') conditionFactor = 0.25;
-
-  const usedAvg = Math.round(baseRetail * conditionFactor);
-  const usedMin = Math.round(usedAvg * 0.82);
-  const usedMax = Math.round(usedAvg * 1.18);
-  const retailMin = Math.round(baseRetail * 0.95);
-  const retailMax = Math.round(baseRetail * 1.15);
-
-  // Exact Mathematical Engine Formulas from Prompt
-  const fastSale = Math.round(usedAvg * 0.82); // -18%
-  const fairPrice = usedAvg;
-  const patientPrice = usedMax;
-  const maxPurchase = Math.round(usedAvg * 0.45); // 45%
-  const grossProfit = usedAvg - maxPurchase;
-  const scamLimit = Math.round(usedAvg * 0.60); // 40% below average
-
-  const baseResult = {
-    product: {
-      brand,
-      model,
-      exactName: `${brand} ${model}`,
-      apparentCondition: condition,
-      confidence: 90,
-      category,
-      keySpecs: ['Inspección visual asistida', 'Garantía de mercado nacional', 'Modelo homologado en México'],
-      notes: 'Valuación generada por el motor matemático de respaldo SnapPrice MX.',
-    },
-    microCheck: [
-      {
-        id: 'condition_check',
-        question: '¿Cuenta con empaque y accesorios originales?',
-        options: ['Con caja y accesorios originales', 'Solo equipo sin caja', 'Con cargador genérico'],
-        selectedAnswer: 'Con caja y accesorios originales',
-      },
-      {
-        id: 'usage_time',
-        question: '¿Cuánto tiempo de uso tiene el producto?',
-        options: ['Menos de 6 meses', '6 a 18 meses', 'Más de 2 años'],
-        selectedAnswer: '6 a 18 meses',
-      },
-    ],
-    marketRadiography: {
-      retailNewMin: retailMin,
-      retailNewMax: retailMax,
-      usedMin,
-      usedMax,
-      usedAverage: usedAvg,
-      currency: 'MXN' as const,
-      platformEstimates: {
-        mercadoLibre: Math.round(usedAvg * 1.05),
-        amazon: Math.round(retailMin * 0.95),
-        marketplace: Math.round(usedAvg * 0.94),
-      },
-    },
-    strategies: {
-      c2c: {
-        fastSalePrice: fastSale,
-        fairPrice,
-        patientSalePrice: patientPrice,
-        listingTitle: `${brand} ${model} en Excelente Estado Con Accesorios Originales`,
-        listingDescription: `${brand} ${model} en estado ${condition}. Funcionamiento al 100%, estéticamente muy cuidado. Se entrega con accesorios completos. Trato serio y entrega en punto seguro.`,
-        tips: ['Sube fotos claras con luz de día', 'Aclara si tienes comprobante o ticket de compra original'],
-      },
-      flipping: {
-        maxPurchasePrice: maxPurchase,
-        targetResalePrice: usedAvg,
-        grossProfit,
-        refurbBuffer: 350,
-        platformFee: Math.round(usedAvg * 0.10),
-        netProfit: grossProfit - 350 - Math.round(usedAvg * 0.10),
-        roiPercentage: 78,
-        negotiationScript: `Te ofrezco $${maxPurchase.toLocaleString('es-MX')} MXN en efectivo inmediato el día de hoy sin regateos ni esperas.`,
-      },
-      buyer: {
-        targetMin: usedMin,
-        targetMax: usedAvg,
-        scamWarningThreshold: scamLimit,
-        antiFraudAdvice: `Desconfía de ofertas por debajo de $${scamLimit.toLocaleString('es-MX')} MXN. Nunca deposites dinero por adelantado sin haber revisado el equipo en persona.`,
-        verificationChecklist: ['Inspeccionar números de serie e IMEI', 'Probar funcionamiento continuo por 5 minutos', 'Revisar cuentas vinculadas y formatear en persona'],
-      },
-      research: {
-        trend: 'Estable con demanda constante en México',
-        annualDepreciationRate: '12% a 15% anual',
-        liquidityIndex: 'Alta' as const,
-        marketNotes: 'Categoría con rotación ágil en Mercado Libre y Marketplace.',
-        bestTimeToSell: 'Primeros días de quincena o temporada de ofertas.',
-      },
-    },
-    formattedReport: `#### 📸 Identificación del Producto
-- **Producto:** ${brand} ${model}
-- **Estado Aparente:** ${condition}
-- *“Para afinar el precio exacto, indícame: ¿Cuenta con factura original o accesorios de fábrica?”*
-
-#### 📊 Radiografía de Mercado (México)
-- **Nuevo (Retail):** $${retailMin.toLocaleString('es-MX')} MXN – $${retailMax.toLocaleString('es-MX')} MXN
-- **Usado (Rango de mercado):** $${usedMin.toLocaleString('es-MX')} MXN – $${usedMax.toLocaleString('es-MX')} MXN
-- **Promedio Usado Real:** **$${usedAvg.toLocaleString('es-MX')} MXN**
-
----
-
-#### 🎯 Estrategia Recomendada (${userIntent === 'c2c' ? 'Venta Particular' : userIntent === 'flipping' ? 'Flipping' : userIntent === 'buyer' ? 'Compra' : 'Investigación'})
-- ⚡ **Venta Rápida:** **$${fastSale.toLocaleString('es-MX')} MXN**
-- ⚖️ **Precio Justo:** **$${fairPrice.toLocaleString('es-MX')} MXN**
-- ⏳ **Venta Paciente:** **$${patientPrice.toLocaleString('es-MX')} MXN**`,
-    timestamp: new Date().toISOString(),
-  };
-
-  return enrichWithMarketTransparencyAndToday(baseResult);
-}
-
-/**
- * enrichWithMarketTransparencyAndToday
- * Enriquece la valuación con datos de transparencia total de comercio electrónico:
- * 1. Muestras reales en vivo de Mercado Libre MX, Facebook Marketplace, Amazon México y eBay México.
- * 2. Fórmula matemática de Valor de Mercado Justo (Fair Market Value) y exclusión de atípicos.
- * 3. Sugerencia de venta al día de hoy calibrada con la fecha y momento de liquidez gamer en México.
- * 
- * @param {any} result - Resultado base de valuación.
- * @returns {any} Resultado enriquecido con transparencia y sugerencia de hoy.
- */
-function enrichWithMarketTransparencyAndToday(result: any): any {
-  if (!result || !result.product || !result.marketRadiography) return result;
-
-  const { product, marketRadiography, strategies } = result;
-  const name = product.exactName || `${product.brand} ${product.model}`;
-  const usedAvg = marketRadiography.usedAverage || 5000;
-  const fastSale = strategies?.c2c?.fastSalePrice || Math.round(usedAvg * 0.82);
-
-  // Fecha actual formateada en español (México)
-  const now = new Date();
-  const todayFormatted = new Intl.DateTimeFormat('es-MX', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  }).format(now);
-
-  const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
-
-  // Muestras representativas de mercado en plataformas mexicanas
-  const samples = [
-    {
-      platform: 'Mercado Libre MX',
-      title: `${name} - Nacional En Caja Original Con Accesorios`,
-      price: Math.round(usedAvg * 1.05),
-      condition: product.apparentCondition || 'Usado - Bueno',
-      sellerReputation: 'MercadoLíder Platinum (4.9★ con 500+ ventas)',
-      url: `https://listado.mercadolibre.com.mx/${encodeURIComponent(name)}`,
-      isSold: true,
-      dateReported: 'Vendido recientemente',
-    },
-    {
-      platform: 'Facebook Marketplace',
-      title: `${name} Estética Impecable 10/10 Trato en Punto Seguro`,
-      price: Math.round(usedAvg * 0.95),
-      condition: product.apparentCondition || 'Usado - Bueno',
-      sellerReputation: 'Perfil Gamer Verificado (5.0★)',
-      url: `https://www.facebook.com/marketplace/search/?query=${encodeURIComponent(name)}`,
-      isSold: false,
-      dateReported: 'Publicación activa hoy',
-    },
-    {
-      platform: 'Amazon México',
-      title: `${name} (Reacondicionado Certificado Renewed MX)`,
-      price: Math.round((marketRadiography.retailNewMin || usedAvg * 1.4) * 0.92),
-      condition: 'Reacondicionado Grado A',
-      sellerReputation: 'Amazon Renewed con 90 días de garantía oficial',
-      url: `https://www.amazon.com.mx/s?k=${encodeURIComponent(name)}`,
-      isSold: false,
-      dateReported: 'En stock con Prime',
-    },
-    {
-      platform: 'eBay México',
-      title: `${name} Edición Completa Probada Funcionando al 100%`,
-      price: Math.round(usedAvg * 1.02),
-      condition: 'Usado - Excelente',
-      sellerReputation: 'Top Rated Seller (99.8%)',
-      url: `https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(name)}`,
-      isSold: true,
-      dateReported: 'Venta cerrada verificada',
-    },
-  ];
-
-  result.realMarketSamples = samples;
-  result.fairMarketCalculation = {
-    sampleCount: 16,
-    outliersExcluded: 2,
-    medianPrice: usedAvg,
-    formulaNotes: `Cálculo de Valor de Mercado Justo (FMV): Mediana ponderada de 14 transacciones válidas en México, tras purgar valores atípicos (-42% por estafa de apartado sospechosa y +38% por sobreprecio especulativo).`,
-    confidenceScore: 96,
-  };
-
-  result.todayRecommendation = {
-    todayDate: capitalize(todayFormatted),
-    recommendedSellPriceToday: fastSale,
-    expectedSaleVelocity: 'Venta rápida (24 a 48 hrs)',
-    marketMomentum: 'Alta rotación: fin de semana gamer con mayor búsqueda y liquidez en México.',
-    optimalListingTime: 'Publicar hoy entre 6:00 PM y 9:30 PM (Pico de compradores activos)',
-    gamingDemandIndex: 'Alta',
-    cashInHandFast: fastSale,
-  };
-
-  return result;
-}
 
 /**
  * Endpoint POST /api/evaluate
@@ -418,13 +124,22 @@ app.post('/api/evaluate', async (req, res) => {
       });
     }
 
-    // Security validation: check image size and allowed MIME types
+    // Security validation: check image size, MIME types and binary magic bytes
     if (imageBase64) {
       if (typeof imageBase64 !== 'string' || imageBase64.length > 20 * 1024 * 1024) {
         return res.status(400).json({
           error: 'La imagen excede el tamaño máximo permitido de 15 MB.',
         });
       }
+
+      // Deep binary inspection (Magic Bytes check prevents arbitrary executable payloads)
+      const magicCheck = validateImageMagicBytes(imageBase64);
+      if (!magicCheck.valid) {
+        return res.status(400).json({
+          error: magicCheck.error || 'El archivo enviado no corresponde a una imagen válida (JPEG, PNG, WebP o HEIC).',
+        });
+      }
+
       const allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
       if (mimeType && !allowedMimes.includes(mimeType.toLowerCase())) {
         return res.status(400).json({

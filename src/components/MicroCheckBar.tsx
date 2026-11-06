@@ -56,7 +56,7 @@ export const MicroCheckBar: React.FC<MicroCheckBarProps> = ({
       </div>
 
       <div className="space-y-4">
-        {questions.map((q) => {
+        {questions.map(q => {
           const currentAnswer = answers[q.id] || q.selectedAnswer;
 
           return (
@@ -66,7 +66,7 @@ export const MicroCheckBar: React.FC<MicroCheckBarProps> = ({
                 {q.question}
               </p>
               <div className="flex flex-wrap gap-2">
-                {q.options.map((opt) => {
+                {q.options.map(opt => {
                   const isSelected = currentAnswer === opt;
                   return (
                     <button

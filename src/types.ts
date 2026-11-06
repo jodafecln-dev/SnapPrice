@@ -1,11 +1,7 @@
 export type UserIntent = 'c2c' | 'flipping' | 'buyer' | 'research';
 
-export type ProductCondition = 
-  | 'Nuevo' 
-  | 'Como nuevo' 
-  | 'Usado - Bueno' 
-  | 'Desgaste visible' 
-  | 'Dañado';
+export type ProductCondition =
+  'Nuevo' | 'Como nuevo' | 'Usado - Bueno' | 'Desgaste visible' | 'Dañado';
 
 export interface MicroQuestion {
   id: string;
@@ -58,19 +54,15 @@ export interface FairMarketCalculation {
 export interface TodayRecommendation {
   todayDate: string;
   recommendedSellPriceToday: number;
-  expectedSaleVelocity: 'Venta rápida (24 a 48 hrs)' | 'Venta regular (3 a 5 días)' | 'Venta paciente (1 a 2 semanas)';
+  expectedSaleVelocity:
+    'Venta rápida (24 a 48 hrs)' | 'Venta regular (3 a 5 días)' | 'Venta paciente (1 a 2 semanas)';
   marketMomentum: string;
   optimalListingTime: string;
   gamingDemandIndex: 'Muy Alta' | 'Alta' | 'Media' | 'Baja';
   cashInHandFast: number;
 }
 
-export type CameraGuideMode = 
-  | 'console' 
-  | 'game_box' 
-  | 'controller' 
-  | 'serial_label' 
-  | 'general';
+export type CameraGuideMode = 'console' | 'game_box' | 'controller' | 'serial_label' | 'general';
 
 export interface ValuationResult {
   product: {
