@@ -1,0 +1,302 @@
+================================================================================
+                    SNAPPRICE MX - DETALLES DEL SISTEMA & ROADMAP
+================================================================================
+Nombre de la App: SnapPrice MX
+Versión Actual: 1.3.0 (Viral Stories 9:16, WhatsApp 1-Click & Official PDF Certificate Edition)
+Mercado Objetivo: México (Precios expresados en Pesos Mexicanos - MXN)
+Stack Técnico: React 19 + TypeScript + Express Full-Stack + Gemini 3.8 Flash + Firebase (Auth & Firestore) + Tailwind CSS v4
+Última Actualización: Noviembre 2026
+
+--------------------------------------------------------------------------------
+1. RESUMEN EJECUTIVO & PROPUESTA DE VALOR
+--------------------------------------------------------------------------------
+SnapPrice MX es la plataforma líder de cotización y valuación visual de productos 
+en segundos, diseñada con un enfoque comercial y de alta conversión para el 
+mercado mexicano. 
+
+Permite a cualquier persona tomar una foto con su celular o subir una imagen para 
+determinar el valor real de su producto en Mercado Libre MX, Facebook Marketplace 
+y Amazon México. Adapta la estrategia y las fórmulas matemáticas según el objetivo:
+  - Venta Particular (C2C): Venta rápida, precio justo y ficha lista para publicar.
+  - Flipping / Reventa: Oferta máxima recomendada (40-50%) y ganancia neta.
+  - Compra Inteligente: Rango sano y radar anti-estafas (-40% del promedio).
+  - Investigación: Tendencias, depreciación y liquidez.
+
+--------------------------------------------------------------------------------
+2. DICCIONARIO COMPLETO DE FUNCIONES Y SUS DETALLES
+--------------------------------------------------------------------------------
+
+A. SERVIDOR BACKEND (server.ts)
+--------------------------------------------------------------------------------
+1. `GET /api/health`
+   - Propósito: Endpoint de diagnóstico y salud del servicio en tiempo real.
+   - Parámetros: Ninguno.
+   - Retorno: JSON con `{ status: "ok", service, hasKey, currency: "MXN", marketplaces, timestamp }`.
+   - Casos límite: Permite a monitores y al frontend verificar si la API está viva y si la clave GEMINI_API_KEY está configurada.
+
+2. `generateHeuristicValuation(description, userIntent, condition, microAnswers)`
+   - Propósito: Motor algorítmico matemático de respaldo (Zero-Failure Fallback).
+   - Parámetros:
+     * `description` (string): Nombre o texto descriptivo del producto ingresado.
+     * `userIntent` (string): Intención seleccionada ('c2c' | 'flipping' | 'buyer' | 'research').
+     * `condition` (string): Grado estético ('Nuevo' | 'Como nuevo' | 'Usado - Bueno' | 'Desgaste visible' | 'Dañado').
+     * `microAnswers` (Record<string, string>): Respuestas a preguntas de desempate.
+   - Retorno: Objeto `ValuationResult` idéntico al de Gemini con rangos en MXN.
+   - Casos límite: Se activa automáticamente si la API de Gemini tiene caídas externas, cuota agotada o si no hay conexión a internet, asegurando 100% de disponibilidad.
+
+3. `POST /api/evaluate`
+   - Propósito: Endpoint de valuación multimodal con Gemini 3.8 Flash.
+   - Parámetros (Body JSON):
+     * `imageBase64` (string opcional): Imagen codificada en Base64.
+     * `mimeType` (string): Tipo MIME ('image/jpeg', 'image/png', etc.).
+     * `description` (string opcional): Texto descriptivo o búsqueda.
+     * `userIntent` (string): 'c2c' | 'flipping' | 'buyer' | 'research'.
+     * `microAnswers` (object): Respuestas de micro-check.
+     * `selectedCondition` (string): Condición física sugerida.
+   - Retorno: JSON estructurado validado con el esquema de Gemini y enriquecido con fecha ISO.
+   - Casos límite: Sanitiza delimitadores markdown, limpia cabeceras Base64 anómalas y devuelve HTTP 400 si faltan tanto imagen como texto.
+
+4. `startServer()`
+   - Propósito: Inicializa el servidor Express integrando el middleware de Vite en desarrollo o sirviendo la carpeta estática dist/ en producción.
+   - Parámetros: Ninguno.
+   - Retorno: Promise<void>.
+
+B. INTEGRACIÓN FIREBASE (src/lib/firebase.ts)
+--------------------------------------------------------------------------------
+5. `testFirestoreConnection()`
+   - Propósito: Probar la conectividad con Cloud Firestore al arrancar la app.
+   - Casos límite: Detecta si el cliente está fuera de línea ('the client is offline') y lo reporta limpiamente.
+
+6. `loginWithGoogle()`
+   - Propósito: Autenticar al usuario con ventana emergente de Google Sign-In.
+   - Retorno: Promise<User | null> de Firebase.
+   - Detalle: Si el usuario cierra el popup voluntariamente ('auth/popup-closed-by-user' o 'auth/cancelled-popup-request'), retorna null de forma silenciosa sin arrojar excepciones al runtime. Si la autenticación es exitosa, guarda o sincroniza el perfil en `/users/{userId}` con displayName, email y última fecha de acceso.
+
+7. `logoutUser()`
+   - Propósito: Terminar la sesión activa del usuario en Firebase Auth.
+
+8. `saveValuationToCloud(userId, valuation)`
+   - Propósito: Escribir una cotización en Firestore en `/users/{userId}/valuations/{valuationId}`.
+   - Parámetros:
+     * `userId` (string): UID del usuario autenticado.
+     * `valuation` (any): Datos del producto, precios, resultado completo y fecha.
+   - Detalle: Agrega timestamp del servidor (`serverTimestamp()`).
+
+9. `fetchUserValuationsFromCloud(userId)`
+   - Propósito: Leer las últimas 30 valuaciones del usuario desde Firestore, ordenadas por fecha descendente.
+   - Retorno: Promise<Array<HistoryItem>> formateado para la interfaz.
+
+10. `deleteValuationFromCloud(userId, valuationId)`
+    - Propósito: Eliminar un registro de valuación específico de la nube.
+
+C. VISTA PRINCIPAL (src/App.tsx)
+--------------------------------------------------------------------------------
+11. `handleLogin()`
+    - Propósito: Gestiona el inicio de sesión con Google. Filtra cierres voluntarios del popup, informa si el navegador bloquea popups y despliega notificación de bienvenida si el inicio es exitoso.
+
+12. `handleLogout()`
+    - Propósito: Cierra la sesión activa en Firebase Auth y muestra confirmación al usuario.
+
+13. `handleEvaluate(data)`
+    - Propósito: Dispara la llamada a `/api/evaluate`, gestiona loaders, actualiza el estado `currentResult`, agrega el registro al historial local y lo sube a Firestore si hay sesión activa.
+
+14. `handleRecalculateMicro()`
+    - Propósito: Reevalúa la cotización tras responder preguntas de desempate (ej. capacidad de GB, caja incluida, salud de batería). Aplica ajuste matemático dinámico local como salvaguarda ante latencia.
+
+15. `handleSelectSample(sample)`
+    - Propósito: Carga instantáneamente una de las 4 cotizaciones de estudio (iPhone 13 Pro, PS5, MacBook Air M1, Sony Alpha A7 IV) y desplaza la vista al resultado.
+
+16. `handleSelectHistoryItem(item)`
+    - Propósito: Restaura una cotización del historial en pantalla y activa el modo correspondiente.
+
+17. `handleClearHistory()`
+    - Propósito: Borra el registro local de valuaciones de memoria y de localStorage.
+
+18. `handleCameraCapture(base64Image)`
+    - Propósito: Recibe la captura en vivo del modal de cámara y la envía directamente a `handleEvaluate`.
+
+19. `showNotification(msg)`
+    - Propósito: Muestra un banner flotante (toast) con acento neón y autocierre en 4 segundos.
+
+20. `scrollToTop()`
+    - Propósito: Realiza scroll suave al inicio de la página para iniciar una nueva cotización.
+
+21. `handleNavigateSection(sectionId)`
+    - Propósito: Dirige la navegación entre 'valuador', 'catalogo', 'flipping' y 'antifraude'.
+
+22. `handleTriggerPhotoUpload()`
+    - Propósito: Disparador del botón Call to Action principal (Desktop y Móvil).
+    - Mecanismo: Localiza el input de tipo archivo oculto (`input[type="file"]`) en el DOM y dispara programáticamente un `.click()`. En teléfonos inteligentes abre inmediatamente la cámara nativa o la galería de fotos en 1 solo toque; en caso de ausencia del input en el DOM, abre como fallback el modal de cámara en vivo integrada.
+    - Impacto UX: Reduce la fricción de cotización a cero clics intermedios.
+
+D. HUB DE ENTRADA VISUAL (src/components/ValuationInput.tsx)
+--------------------------------------------------------------------------------
+23. `processFile(file)`
+    - Propósito: Lee cualquier foto subida o arrastrada y la redimensiona en cliente usando HTML5 Canvas a un máximo de 1280px con compresión JPEG 88%.
+    - Beneficio: Evita errores HTTP 413 (Payload Too Large) y reduce fotos de 15MB a ~300KB sin pérdida de nitidez para la IA.
+
+24. `handleFileChange(e)`
+    - Propósito: Escucha la selección de archivo nativa y lo envía a `processFile`.
+
+25. `handleDragOver(e)` / `handleDragLeave()` / `handleDrop(e)`
+    - Propósito: Controladores del evento drag-and-drop para arrastrar imágenes desde el escritorio.
+
+26. `handleSubmit(e)`
+    - Propósito: Valida campos mínimos y ejecuta la función `onEvaluate`.
+
+27. `clearImage()`
+    - Propósito: Elimina la imagen seleccionada y resetea el input de tipo file.
+
+E. CÁMARA EN VIVO (src/components/CameraCapture.tsx)
+--------------------------------------------------------------------------------
+28. `startCamera()`
+    - Propósito: Conecta con el hardware de video vía `navigator.mediaDevices.getUserMedia` con resolución 1280x960 y retícula de encuadre.
+
+29. `stopCamera()`
+    - Propósito: Libera los recursos de hardware y apaga la luz de la cámara al cerrar.
+
+30. `switchCamera()`
+    - Propósito: Cambia entre la cámara principal trasera ('environment') y la frontal ('user').
+
+31. `handleCapture()`
+    - Propósito: Extrae el frame de video actual, lo dibuja en canvas y entrega el DataURL en Base64.
+
+F. COMPONENTES DE ESTRATEGIA Y REPORTE (StrategyPanel.tsx & ReportModal.tsx)
+--------------------------------------------------------------------------------
+32. `formatMXN(val)`
+    - Propósito: Formateador numérico universal en pesos mexicanos (`$XX,XXX MXN`).
+
+33. `handleCopy(text, sectionKey)`
+    - Propósito: Copia texto al portapapeles con confirmación visual de 2.5 segundos.
+
+34. `generateCleanReportText()`
+    - Propósito: Construye el reporte oficial con el formato exacto de SnapPrice listo para publicar o compartir.
+
+35. `handlePrint()`
+    - Propósito: Abre el cuadro de diálogo nativo de impresión para exportar en PDF o papel con hoja membretada oficial.
+
+36. `handleShareWhatsAppListing()`
+    - Propósito: Abre directamente WhatsApp (`https://wa.me/?text=...`) con el título SEO, precio justo en MXN y descripción comercial prellenados para vender en grupos de venta o enviar a compradores interesados con 1 solo clic.
+
+37. `handleShareWhatsAppNegotiation()`
+    - Propósito: Envía la propuesta formal de compra del revendedor/flipper a WhatsApp con el guion psicológico de negociación prellenado.
+
+38. `handleShareWhatsApp()` (en ReportModal)
+    - Propósito: Comparte el resumen oficial del informe con folio único y desglose de precios directamente a un contacto de WhatsApp.
+
+G. GENERADOR DE POSTERS 9:16 PARA HISTORIAS (src/components/StoryCardModal.tsx)
+--------------------------------------------------------------------------------
+39. `getActivePrice()`
+    - Propósito: Devuelve el precio activo (Precio Justo, Venta Rápida o Personalizado) seleccionado por el usuario para estampar en el póster.
+
+40. `generateAndDownloadImage()`
+    - Propósito: Renderiza un póster gráfico de alta definición (1080x1920 píxeles, proporción 9:16 vertical) utilizando HTML5 Canvas 2D.
+    - Elementos dibujados: Fondo midnight gradient con resplandor neón esmeralda y cian, fotografía del producto con recorte adaptativo, badge de estado físico, título destacado, precio gigante con resplandor neón, comparativa con Mercado Libre MX, teléfono/WhatsApp de contacto, ubicación en México y sello de verificación SnapPrice.
+    - Salida: Descarga instantánea de archivo PNG con nombre dinámico `snapprice-[producto]-historia.png`.
+
+41. `handleShareWhatsApp()` (en StoryCardModal)
+    - Propósito: Genera el texto estructurado del anuncio listo para pegar en el estado de WhatsApp o enviar a chats.
+
+H. RADIOGRAFÍA DE MERCADO CON COMPARACIÓN EN VIVO (src/components/MarketGauge.tsx)
+--------------------------------------------------------------------------------
+42. `mlSearchUrl` / `fbSearchUrl` / `amzSearchUrl`
+    - Propósito: Genera enlaces parametrizados con el nombre exacto del producto a Mercado Libre México (`listado.mercadolibre.com.mx`), Facebook Marketplace (`facebook.com/marketplace/search`) y Amazon México (`amazon.com.mx/s?k=`) para que los usuarios contrasten publicaciones activas en tiempo real con 1 solo toque.
+
+--------------------------------------------------------------------------------
+3. HISTORIAL DE CAMBIOS (CHANGELOG) Y PROTOCOLO DE REGISTRO
+--------------------------------------------------------------------------------
+*CADA MODIFICACIÓN FUTURA EN LA APLICACIÓN DEBE REGISTRARSE EN ESTA SECCIÓN*
+
+[2026-11-01] - Versión 1.0.0
+- Lanzamiento inicial de SnapPrice MX.
+- Integración de los 4 pilares: Visión y clasificación, Micro-Checks de desempate, motor matemático de precios en MXN y formatos obligatorios de reporte.
+- Catálogo de prueba con 4 imágenes de estudio de alta definición.
+
+[2026-11-01] - Versión 1.1.0
+- Integración de Firebase Auth con inicio de sesión mediante Google.
+- Conexión con base de datos Cloud Firestore y reglas de seguridad Zero-Trust.
+- Auditoría integral de endpoints: agregado de /api/health y blindaje contra caídas con motor heurístico local.
+- Compresión de imágenes en cliente con Canvas (1280px) para eliminar errores de tamaño de archivo (HTTP 413).
+
+[2026-11-01] - Versión 1.2.0 (Cyber-Neon & Marketing Edition)
+- Eliminación de la frase técnica "Inteligencia Central de Valuación Visual · México".
+- Adopción de tono conversacional, vendedor y optimizado para SEO en toda la app.
+- Incorporación de tarjeta 3D con efecto Flip Card reversible (Frente: resumen visual y precio; Dorso: ficha técnica y certezas).
+- Rediseño visual Cyber-Techno: paleta deep midnight con acentos neón esmeralda eléctrico, cian y violeta, mallas digitales y cifras tabulares brillantes.
+- Creación del archivo de documentación técnica `DETALLES_Y_ROADMAP_SNAPPRICE.txt`.
+- Documentación JSDoc agregada en todas las funciones y controladores del sistema.
+
+[2026-11-01] - Versión 1.2.1 (Auth Resilience & Popup Cancellation Fix)
+- Corrección de excepción `auth/popup-closed-by-user`: Se modificó `loginWithGoogle()` para capturar cierres voluntarios de popup y cancelaciones del usuario retornando `null` de forma limpia y transparente sin registrar errores críticos en consola.
+- Protección en `handleLogin()`: Detección preventiva de `auth/popup-blocked` con mensaje amigable para orientar al usuario a autorizar ventanas emergentes en el navegador.
+- Sanitización de logs en frontend: Sustitución de `console.error` por `console.warn` en operaciones asíncronas no fatales con fallback garantizado (revaluaciones, deslogueo y micro-checks).
+
+[2026-11-01] - Versión 1.2.2 (Hero Copy Refinement & High-Conversion UX)
+- Optimización y síntesis del bloque principal (Hero): Reducción de más del 50% de longitud de texto manteniendo 100% el impacto comercial y la claridad del valor.
+  * Badge superior sintetizado: "🔥 Cotizador #1 en México · ML & Marketplace" (reemplaza texto sobrecargado).
+  * Título H1 directo y de acción inmediata: "¿Cuánto vale lo que tienes? Cotízalo en segundos" (acento en degradado cian/esmeralda).
+  * Subtítulo con resonancia de mercado mexicano: "Sube una foto o describe tu producto. Vende rápido sin malbaratar y compra seguro sin estafas." (elimina redundancias y se enfoca en resolver el dolor de vendedores y compradores).
+
+[2026-11-01] - Versión 1.2.3 (Minimalist Hero Phrase & Call to Action Button)
+- Simplificación radical del encabezado (Hero): Eliminación completa de textos secundarios, explicaciones y del badge superior ("🔥 Cotizador #1 en México · ML & Marketplace").
+- Titular único y directo solicitado por el usuario:
+  * "¿Cuánto vale lo que tienes? Sube una foto y Cotízalo en segundos."
+- Nuevo Botón Call to Action (CTA):
+  * Botón principal en el Hero: "Subir foto y cotizar ahora" con icono de cámara, flecha de acción y gradiente esmeralda-cian interactivo. Al hacer clic activa directamente la cámara nativa o selector de archivos.
+  * Barra persistente inferior ("Bottom Call to Action") para móviles con acceso instantáneo a la cotización con 1 solo toque.
+- Nueva función documentada con JSDoc: `handleTriggerPhotoUpload()`.
+
+[2026-11-06] - Versión 1.3.0 (Viral Stories 9:16, WhatsApp 1-Click & Official PDF Certificate Edition)
+- FASE 1 DEL ROADMAP COMPLETADA AL 100%:
+  1. Generador de Imagen para Historias / Estado de WhatsApp (9:16):
+     * Nuevo componente `StoryCardModal.tsx` con simulador de smartphone en vivo.
+     * Generación de póster en alta resolución (1080x1920) mediante HTML5 Canvas 2D con descarga directa a PNG.
+     * Selector de precios: Precio Justo, Venta Rápida o Personalizado con personalización de teléfono/WhatsApp y ciudad.
+     * Botón de acceso directo "Póster 9:16" integrado en `IdentificationCard.tsx`.
+  2. Certificado Oficial de Avalúo Imprimible / PDF:
+     * En `ReportModal.tsx` se integró pestaña conmutadora entre "Ficha Texto" y "Certificado PDF".
+     * Incluye Folio Serial único (ej. `MX-VAL-849201`), marca de agua diagonal de seguridad ("CERTIFICADO SNAPPRICE"), sello criptográfico SHA256 y código QR de verificación.
+     * Estilos de impresión `@media print` para generar PDF membretado impecable en 1 clic.
+  3. Compartir en WhatsApp en 1 Clic:
+     * Botón "WhatsApp" en `StrategyPanel.tsx` para ficha C2C con título y descripción prellenados.
+     * Botón "WhatsApp" en `StrategyPanel.tsx` para guion de negociación de revendedores (Flipping).
+     * Botón "Enviar a WhatsApp" en `ReportModal.tsx` para compartir el dictamen oficial.
+  4. Radar de Comparación en Vivo en México:
+     * Enlaces de búsqueda directa integrados en `MarketGauge.tsx` para verificar publicaciones activas en Mercado Libre México, Facebook Marketplace y Amazon México.
+
+================================================================================
+4. PRÓXIMOS CAMBIOS Y MEJORAS PLANIFICADAS (ROADMAP)
+================================================================================
+
+FASE 1: MEJORAS DE EXPORTACIÓN & REDES SOCIALES (¡COMPLETADA!)
+--------------------------------------------------------------------------------
+[x] 1. Generador de Imagen para Historias / Estado de WhatsApp (9:16):
+    - Exportación gráfica con diseño neón, foto, precio y teléfono de contacto para redes.
+[x] 2. Exportación a PDF con Marca de Agua:
+    - Generador de hoja membretada con folio único, marca de agua y código QR para bazares y casas de empeño.
+[x] 3. Compartir directo a WhatsApp:
+    - Botón de 1 clic para abrir chat con la ficha del anuncio prellenada en C2C, Flipping y Reporte.
+[x] 4. Comparación en vivo en plataformas mexicanas:
+    - Enlaces directos a búsquedas de Mercado Libre MX, Facebook Marketplace y Amazon MX.
+
+FASE 2: HERRAMIENTAS AVANZADAS PARA FLIPPERS (Mediano Plazo)
+--------------------------------------------------------------------------------
+[ ] 5. Escáner de Código de Barras / UPC:
+    - Lector con cámara para identificar juegos, electrónicos y calzado al instante.
+[ ] 6. Valuador de Lotes / Paquetes:
+    - Análisis multi-producto para compras al mayoreo en bazares y tianguis.
+[ ] 7. Calculadora de Comisiones de Mercado Libre:
+    - Desglose exacto entre publicación Clásica (13%) vs Premium (17%) con flete.
+
+FASE 3: INTELIGENCIA DE MERCADO & COMUNIDAD (Largo Plazo)
+--------------------------------------------------------------------------------
+[ ] 8. Alertas de Oportunidad y Seguimiento de Precios:
+    - Notificaciones para compradores cuando una pieza baje al rango seguro.
+[ ] 9. Directorio de Puntos Seguros de Entrega en México:
+    - Plazas comerciales vigiladas en CDMX, Guadalajara, Monterrey, etc.
+[ ] 10. Base de Datos Comunitaria Anti-Fraude:
+    - Registro de números y perfiles sospechosos reportados en Marketplace.
+
+================================================================================
+Fin del Documento · SnapPrice MX · 2026
+================================================================================
