@@ -69,9 +69,11 @@ export async function testFirestoreConnection(): Promise<void> {
     await getDocFromServer(doc(db, 'test', 'connection'));
     console.log('Firestore connection verified');
   } catch (error: any) {
-    if (error?.message?.includes('the client is offline')) {
-      console.warn('Firestore is running in offline mode or database is initializing.');
+    if (error?.code === 'permission-denied' || error?.message?.includes('the client is offline')) {
+      // Normal behavior prior to login or during offline sync
+      return;
     }
+    console.warn('Firestore initialization notice:', error?.message);
   }
 }
 
@@ -135,9 +137,16 @@ export async function logoutUser(): Promise<void> {
  */
 export async function saveValuationToCloud(userId: string, valuation: any): Promise<void> {
   if (!userId) return;
-  const valuationId = valuation.id || ('val-' + Date.now());
+  const rawId = valuation.id || ('val-' + Date.now());
+  const valuationId = rawId.replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 120);
   const valRef = doc(db, 'users', userId, 'valuations', valuationId);
   
+  // Clone result data and sanitize oversized base64 strings so document never approaches 1MB Firestore limit
+  let cleanResult = valuation.result ? { ...valuation.result } : { ...valuation };
+  if (cleanResult.imagePreviewUrl && cleanResult.imagePreviewUrl.length > 50000) {
+    cleanResult = { ...cleanResult, imagePreviewUrl: '' };
+  }
+
   await setDoc(valRef, {
     id: valuationId,
     userId,
@@ -148,8 +157,8 @@ export async function saveValuationToCloud(userId: string, valuation: any): Prom
     usedAverage: valuation.averageUsedPrice || valuation.marketRadiography?.usedAverage || 0,
     fastSalePrice: valuation.fastSalePrice || valuation.strategies?.c2c?.fastSalePrice || 0,
     userIntent: valuation.userIntent || 'c2c',
-    imageUrl: valuation.imageUrl || valuation.imagePreviewUrl || '',
-    resultData: JSON.stringify(valuation.result || valuation),
+    imageUrl: typeof valuation.imageUrl === 'string' && valuation.imageUrl.length < 50000 ? valuation.imageUrl : '',
+    resultData: JSON.stringify(cleanResult),
     createdAt: new Date().toISOString(),
     timestamp: serverTimestamp(),
   });
@@ -209,6 +218,7 @@ export async function fetchUserValuationsFromCloud(userId: string): Promise<Arra
  */
 export async function deleteValuationFromCloud(userId: string, valuationId: string): Promise<void> {
   if (!userId || !valuationId) return;
-  const valRef = doc(db, 'users', userId, 'valuations', valuationId);
+  const safeId = valuationId.replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 120);
+  const valRef = doc(db, 'users', userId, 'valuations', safeId);
   await deleteDoc(valRef);
 }

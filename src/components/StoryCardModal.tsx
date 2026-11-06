@@ -128,11 +128,14 @@ export const StoryCardModal: React.FC<StoryCardModalProps> = ({
       if (imagePreviewUrl) {
         try {
           const img = new Image();
-          img.crossOrigin = 'anonymous';
+          if (!imagePreviewUrl.startsWith('data:')) {
+            img.crossOrigin = 'anonymous';
+          }
           img.src = imagePreviewUrl;
           await new Promise((resolve) => {
             img.onload = resolve;
             img.onerror = resolve;
+            setTimeout(resolve, 2500);
           });
           // Cover center
           const scale = Math.max(imgBoxW / img.width, imgBoxH / img.height);

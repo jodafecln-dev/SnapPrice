@@ -297,15 +297,23 @@ export default function App() {
         if (val.includes('256 GB')) multiplier += 0.08;
         if (val.includes('512 GB')) multiplier += 0.16;
         if (val.includes('1 TB')) multiplier += 0.22;
-        if (val.includes('90%') || val.includes('Excelente')) multiplier += 0.05;
-        if (val.includes('Menos de 80%')) multiplier -= 0.12;
-        if (val.includes('Caja +')) multiplier += 0.05;
-        if (val.includes('Solo equipo suelto')) multiplier -= 0.05;
+        if (val.includes('2 Controles')) multiplier += 0.12;
+        if (val.includes('Sin control')) multiplier -= 0.12;
+        if (val.includes('Con Lector') || val.includes('Estándar')) multiplier += 0.10;
+        if (val.includes('Digital')) multiplier -= 0.08;
+        if (val.includes('Sin drift') || val.includes('100% calibrados')) multiplier += 0.05;
+        if (val.includes('Drift') || val.includes('drift')) multiplier -= 0.10;
+        if (val.includes('Con caja') || val.includes('Caja +')) multiplier += 0.06;
+        if (val.includes('Solo consola') || val.includes('Solo equipo') || val.includes('suelto')) multiplier -= 0.08;
       });
 
       cloned.marketRadiography.usedAverage = Math.round(cloned.marketRadiography.usedAverage * multiplier);
       cloned.marketRadiography.usedMin = Math.round(cloned.marketRadiography.usedMin * multiplier);
       cloned.marketRadiography.usedMax = Math.round(cloned.marketRadiography.usedMax * multiplier);
+      cloned.marketRadiography.platformEstimates.mercadoLibre = Math.round(cloned.marketRadiography.usedAverage * 1.05);
+      cloned.marketRadiography.platformEstimates.marketplace = Math.round(cloned.marketRadiography.usedAverage * 0.95);
+      cloned.marketRadiography.platformEstimates.amazon = Math.round((cloned.marketRadiography.retailNewMin || cloned.marketRadiography.usedAverage * 1.3) * 0.92);
+
       cloned.strategies.c2c.fastSalePrice = Math.round(cloned.marketRadiography.usedAverage * 0.82);
       cloned.strategies.c2c.fairPrice = cloned.marketRadiography.usedAverage;
       cloned.strategies.c2c.patientSalePrice = cloned.marketRadiography.usedMax;
@@ -314,6 +322,11 @@ export default function App() {
       cloned.strategies.buyer.targetMin = cloned.marketRadiography.usedMin;
       cloned.strategies.buyer.targetMax = cloned.marketRadiography.usedAverage;
       cloned.strategies.buyer.scamWarningThreshold = Math.round(cloned.marketRadiography.usedAverage * 0.6);
+
+      if (cloned.todayRecommendation) {
+        cloned.todayRecommendation.recommendedSellPriceToday = cloned.strategies.c2c.fastSalePrice;
+        cloned.todayRecommendation.cashInHandFast = cloned.strategies.c2c.fastSalePrice;
+      }
 
       setCurrentResult(cloned);
     } finally {

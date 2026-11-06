@@ -169,6 +169,34 @@ H. REPORTES, CERTIFICADOS Y PÓSTERS 9:16 (ReportModal.tsx & StoryCardModal.tsx)
 - Preguntas de Apoyo Rápidas en `ValuationInput.tsx`:
   * Atajos táctiles en 1 toque para inyectar especificaciones gamer (Con Lector, Digital, Sin Drift, Con Caja Original, 2 Controles).
 
+[2026-11-06] - Versión 1.4.1 (Auditoría Exhaustiva de Endpoints, Resiliencia y Consistencia Total)
+- Auditoría y Blindaje de Endpoints Backend:
+  * `POST /api/evaluate`: Inyección de `Promise.race` con timeout de 12 segundos para garantizar que llamadas a la IA nunca se queden congeladas o colgadas; extractor Regex `/\{[\s\S]*\}/` para parseo inmune a markdown exterior; fallback matemático heurístico instantáneo en caso de contingencia.
+  * `GET /api/health`: Verificación completa de respuesta HTTP 200 con claves activas, moneda MXN y estado de marketplaces.
+- Sanitización y Cuota de Firestore (`firebase.ts`):
+  * Blindaje en `saveValuationToCloud`: Se eliminan cadenas base64 masivas (>50KB) del objeto `resultData` antes de guardar en Firestore, evitando alcanzar el límite estricto de 1MB por documento.
+  * Silenciamiento elegante de error `permission-denied` en `testFirestoreConnection` previo a inicio de sesión.
+- Seguridad en Canvas y Generación de Pósters 9:16 (`StoryCardModal.tsx`):
+  * Eliminación de `crossOrigin = 'anonymous'` en imágenes locales con esquema `data:` para erradicar errores de `SecurityError` (Canvas Tainting).
+  * Timeout de 2.5s garantizado para carga de imágenes en segundo plano.
+- Consistencia en Recálculos Rápidos (`App.tsx`):
+  * Sincronización completa de `handleRecalculateMicro` para recalcular dinámicamente precios por plataforma, sugerencia de venta al día de hoy y microfactores gamer.
+- Documentación Ejecutiva y Técnica Oficial (`README.md`):
+  * Creación del archivo `README.md` principal con especificaciones completas de arquitectura, contratos de API, blindajes de resiliencia, especialización gamer, changelog y hoja de ruta con posibles mejoras.
+
+[2026-11-06] - Versión 1.4.2 (Blindaje Integral de Seguridad Firebase & Zero-Trust ABAC)
+- Desmitificación y Arquitectura de Claves:
+  * Aislamiento total de claves secretas: `GEMINI_API_KEY` reside exclusivamente en el backend Node.js (`server.ts`) y nunca es expuesta al frontend ni a la consola del navegador.
+  * Clarificación sobre Firebase `apiKey`: Se documentó y protegió entendiendo que en Firebase el apiKey es un identificador público de cliente, y que la verdadera barrera de seguridad reside en las reglas de Firestore.
+- Reglas de Seguridad Fortress (`firestore.rules`):
+  * Implementación de Control de Acceso Basado en Atributos (ABAC) y Zero-Trust.
+  * Helper `isValidId` que exige cadenas alfanuméricas seguras (`^[a-zA-Z0-9_-]+$`) de hasta 128 caracteres, neutralizando ataques de inyección de rutas (ID Poisoning).
+  * Funciones de validación estricta de esquema: `isValidUser` y `isValidValuation` con límites de longitud (`.size()`), validación de tipos y rangos numéricos.
+  * Bloqueo estricto de campos inmutables: El UID y el ID de cotización no pueden ser alterados en actualizaciones.
+  * Despliegue en caliente a producción ejecutado con éxito vía `deploy_firebase`.
+- Sanitización de IDs en Cliente (`src/lib/firebase.ts`):
+  * Sanitización automática de IDs de documentos con `replace(/[^a-zA-Z0-9_-]/g, '_')` en `saveValuationToCloud` y `deleteValuationFromCloud`.
+
 ================================================================================
 4. PRÓXIMOS CAMBIOS Y MEJORAS PLANIFICADAS (ROADMAP)
 ================================================================================
