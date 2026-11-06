@@ -34,6 +34,19 @@
         "createdAt": { "type": "string", "format": "date-time" }
       },
       "required": ["id", "userId", "productName", "usedAverage", "createdAt"]
+    },
+    "PublicCatalogItem": {
+      "title": "PublicCatalogItem",
+      "description": "Public gaming benchmark and price reference catalog",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "benchmarkMXN": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "benchmarkMXN"]
     }
   },
   "firestore": {
@@ -44,6 +57,10 @@
     "/users/{userId}/valuations/{valuationId}": {
       "schema": "Valuation",
       "description": "User's saved valuation records and quotes"
+    },
+    "/public_catalog/{catalogId}": {
+      "schema": "PublicCatalogItem",
+      "description": "Public pricing benchmark catalog readable by any user, write-restricted"
     }
   }
 }

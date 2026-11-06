@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { UserIntent, ProductCondition } from '../types';
 import { SAMPLE_PRODUCTS, SampleItem } from '../data/samples';
+import { validateImageFile } from '../utils/pricing';
 
 interface ValuationInputProps {
   onEvaluate: (data: {
@@ -46,6 +47,7 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
   const [mimeType, setMimeType] = useState<string>('image/jpeg');
   const [condition, setCondition] = useState<ProductCondition | undefined>(undefined);
   const [isDragging, setIsDragging] = useState(false);
+  const [fileError, setFileError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   /**
@@ -69,6 +71,13 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
    * @param {File} file - Archivo de imagen seleccionado o arrastrado.
    */
   const processFile = (file: File) => {
+    setFileError(null);
+    const validation = validateImageFile(file);
+    if (!validation.valid) {
+      setFileError(validation.error || 'Archivo de imagen no válido');
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = (event) => {
       const img = new Image();
@@ -356,6 +365,19 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
                 </div>
               )}
             </div>
+
+            {fileError && (
+              <div className="p-2.5 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs flex items-center justify-between">
+                <span>{fileError}</span>
+                <button 
+                  type="button" 
+                  onClick={() => setFileError(null)} 
+                  className="text-rose-400 hover:text-white ml-2 text-xs font-bold"
+                >
+                  ✕
+                </button>
+              </div>
+            )}
 
             {/* Description & Model Details Input */}
             <div className="flex flex-col justify-between space-y-3">

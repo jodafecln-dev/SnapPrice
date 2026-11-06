@@ -84,6 +84,23 @@ service cloud.firestore {
     }
 
     // =========================================================================
+    // PUBLIC PRICING CATALOG & BENCHMARKS (LECTURA PÚBLICA / ESCRITURA BLOQUEADA)
+    // =========================================================================
+    match /public_catalog/{catalogId} {
+      // Lectura pública permitida para consulta del catálogo referencial
+      allow get, list: if true;
+      // Escritura totalmente denegada para clientes no autorizados
+      allow write: if false;
+    }
+
+    match /market_benchmarks/{benchmarkId} {
+      // Lectura pública para benchmarks de mercado
+      allow get, list: if true;
+      // Escritura bloqueada desde el cliente
+      allow write: if false;
+    }
+
+    // =========================================================================
     // GLOBAL DEFAULT DENY CATCH-ALL
     // =========================================================================
     match /{document=**} {

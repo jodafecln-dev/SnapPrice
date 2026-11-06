@@ -197,6 +197,24 @@ H. REPORTES, CERTIFICADOS Y PÓSTERS 9:16 (ReportModal.tsx & StoryCardModal.tsx)
 - Sanitización de IDs en Cliente (`src/lib/firebase.ts`):
   * Sanitización automática de IDs de documentos con `replace(/[^a-zA-Z0-9_-]/g, '_')` en `saveValuationToCloud` y `deleteValuationFromCloud`.
 
+[2026-11-06] - Versión 1.4.3 (Arquitectura Modular, Vitest Suite, Rate Limiting & Docker)
+- Separación de Catálogo Público vs Valuaciones Privadas en Firestore:
+  * Reglas para `/public_catalog/{catalogId}` y `/market_benchmarks/{benchmarkId}` con `allow get, list: if true` y `allow write: if false`.
+  * Valuaciones privadas `/users/{userId}/valuations/{valuationId}` estrictamente restringidas a `isOwner(userId)` con validación de payload `incoming()`.
+  * Ausencia total de `allow read, write: if true` en todo el proyecto.
+- Seguridad en el Servidor (`server.ts`):
+  * Cabeceras de seguridad HTTP: `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, `X-XSS-Protection`, `Referrer-Policy`.
+  * Limitador de tasa (Rate Limiter) en memoria por IP (máximo 30 peticiones/minuto) para proteger contra DoS y abuso de cuota de IA.
+  * Validación estricta del tamaño de imagen (máx 15MB) y tipos MIME autorizados en `POST /api/evaluate`.
+- Validación de Archivos en Cliente (`src/utils/pricing.ts` & `ValuationInput.tsx`):
+  * Módulo reutilizable `validateImageFile` que previene subidas mayores a 10MB o tipos no permitidos con banner visual de error.
+- Suite de Pruebas Unitarias Automatizadas (Vitest):
+  * Configuración del script `"test": "vitest run"` en `package.json`.
+  * 9 pruebas unitarias en `tests/pricing.test.ts` evaluando detección de estafas, purga de outliers, cálculo de mediana FMV, venta rápida y validación de imágenes (100% passing).
+- Despliegue en Producción y Contenedores:
+  * Creación de `Dockerfile` multi-etapa y `.dockerignore` para despliegue en Google Cloud Run o VPS.
+  * Especificación de motor Node `"engines": { "node": ">=18.0.0" }`.
+
 ================================================================================
 4. PRÓXIMOS CAMBIOS Y MEJORAS PLANIFICADAS (ROADMAP)
 ================================================================================

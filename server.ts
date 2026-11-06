@@ -12,8 +12,44 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 
+// Security headers middleware
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+});
+
 // Increase JSON limit for camera images and base64 payloads
 app.use(express.json({ limit: '25mb' }));
+
+// In-memory sliding rate limiter (max 30 requests/minute per IP)
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + 60 * 1000 });
+    return true;
+  }
+  if (entry.count >= 30) {
+    return false;
+  }
+  entry.count++;
+  return true;
+}
+
+// Clean up stale rate limit entries every 5 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, data] of rateLimitMap.entries()) {
+    if (now > data.resetTime) {
+      rateLimitMap.delete(ip);
+    }
+  }
+}, 5 * 60 * 1000);
 
 // Shared Gemini AI client with telemetry header
 const apiKey = process.env.GEMINI_API_KEY || '';
@@ -367,11 +403,34 @@ app.post('/api/evaluate', async (req, res) => {
       selectedCondition,
     } = req.body;
 
-    // Check if at least one input is provided
+    // Rate limiting check
+    const clientIp = req.ip || req.socket.remoteAddress || 'unknown';
+    if (!checkRateLimit(clientIp)) {
+      return res.status(429).json({
+        error: 'Límite de solicitudes alcanzado. Por favor espera un momento antes de solicitar otra valuación.',
+      });
+    }
+
+    // Input validation: at least one input must be present
     if (!imageBase64 && (!description || !description.trim())) {
       return res.status(400).json({
         error: 'Debes proporcionar una imagen o una descripción del producto para realizar la valuación.',
       });
+    }
+
+    // Security validation: check image size and allowed MIME types
+    if (imageBase64) {
+      if (typeof imageBase64 !== 'string' || imageBase64.length > 20 * 1024 * 1024) {
+        return res.status(400).json({
+          error: 'La imagen excede el tamaño máximo permitido de 15 MB.',
+        });
+      }
+      const allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
+      if (mimeType && !allowedMimes.includes(mimeType.toLowerCase())) {
+        return res.status(400).json({
+          error: 'Formato de imagen no soportado. Usa JPEG, PNG o WebP.',
+        });
+      }
     }
 
     // If Gemini API key is missing or not configured, return clean heuristic valuation immediately

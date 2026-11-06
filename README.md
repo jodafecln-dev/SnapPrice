@@ -212,11 +212,34 @@ npm run dev
 ```
 La aplicación estará disponible en `http://localhost:3000`.
 
-4. **Compilación para producción:**
+4. **Ejecutar suite de pruebas unitarias (Vitest):**
+```bash
+npm run test
+```
+
+5. **Compilación y ejecución para producción:**
 ```bash
 npm run build
 npm run start
 ```
+
+---
+
+## 🐳 Despliegue en Producción (Docker & Cloud Run)
+
+El proyecto incluye un `Dockerfile` multi-etapa optimizado para producción:
+
+```bash
+# Construir la imagen Docker
+docker build -t snapprice-mx .
+
+# Ejecutar el contenedor
+docker run -p 3000:3000 -e GEMINI_API_KEY="tu_clave_gemini" snapprice-mx
+```
+
+* **Google Cloud Run:** Compatible de forma nativa desplegando la imagen en Artifact Registry.
+* **VPS / Node.js:** Ejecutable con `pm2 start server.ts --name "snapprice" --interpreter tsx`.
+* **Archivo `metadata.json`:** Requerido por la plataforma Google AI Studio para declarar permisos del contenedor, proxy de IA del servidor (`MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API`) y metadatos de despliegue.
 
 ---
 
