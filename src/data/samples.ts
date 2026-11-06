@@ -13,131 +13,22 @@ export interface SampleItem {
 
 export const SAMPLE_PRODUCTS: SampleItem[] = [
   {
-    id: 'sample-iphone-13-pro',
-    name: 'Apple iPhone 13 Pro 128GB Grafito',
-    tagline: 'Gama alta muy buscado en Facebook Marketplace y Mercado Libre',
-    category: 'Smartphones & Telefonía',
-    imagePath: '/src/assets/images/sample_iphone_1793599980253.jpg',
-    apparentCondition: 'Como nuevo',
-    description: 'iPhone 13 Pro de 128GB color Grafito, estética 9.5/10 sin rayones en pantalla, batería 88%, libre para cualquier compañía en México con cable original.',
-    initialResult: {
-      product: {
-        brand: 'Apple',
-        model: 'iPhone 13 Pro (128GB)',
-        exactName: 'Apple iPhone 13 Pro 128GB Grafito',
-        apparentCondition: 'Como nuevo',
-        confidence: 96,
-        category: 'Smartphones',
-        keySpecs: ['128GB Almacenamiento', 'Pantalla Super Retina XDR 120Hz', 'Cámara Triple 12MP Telefoto', 'Chip A15 Bionic'],
-        notes: 'Chasis de acero inoxidable sin abolladuras, módulo de cámaras impecable.',
-      },
-      microCheck: [
-        {
-          id: 'storage',
-          question: '¿Qué capacidad de almacenamiento tiene tu iPhone?',
-          options: ['128 GB', '256 GB', '512 GB', '1 TB'],
-          selectedAnswer: '128 GB',
-        },
-        {
-          id: 'battery_health',
-          question: '¿Cuál es el porcentaje de condición de la batería?',
-          options: ['90% o más (Excelente)', '84% a 89% (Buena)', 'Menos de 80% (Mantenimiento)'],
-          selectedAnswer: '84% a 89% (Buena)',
-        },
-        {
-          id: 'box_accessories',
-          question: '¿Incluye caja y accesorios originales?',
-          options: ['Caja + Cable original', 'Solo equipo suelto', 'Caja + Cubo 20W + Fundas'],
-          selectedAnswer: 'Caja + Cable original',
-        },
-      ],
-      marketRadiography: {
-        retailNewMin: 18999,
-        retailNewMax: 21999,
-        usedMin: 8500,
-        usedMax: 11800,
-        usedAverage: 9800,
-        currency: 'MXN',
-        platformEstimates: {
-          mercadoLibre: 10400,
-          amazon: 11200,
-          marketplace: 9400,
-        },
-      },
-      strategies: {
-        c2c: {
-          fastSalePrice: 8200,
-          fairPrice: 9800,
-          patientSalePrice: 11200,
-          listingTitle: 'iPhone 13 Pro 128GB Grafito Libre Fábrica Impecable Con Caja',
-          listingDescription: 'iPhone 13 Pro 128GB Grafito en excelente estado estético (9.5/10). Pantalla y cámaras intactas, batería al 88%, libre para cualquier compañía nacional. Se entrega con caja y cable USB-C a Lightning original. Trato serio y directo.',
-          tips: ['Publica fotos con la pantalla encendida mostrando el IMEI y condición de batería', 'Evita transferencias falsas; entrega en plaza comercial vigilada'],
-        },
-        flipping: {
-          maxPurchasePrice: 4900,
-          targetResalePrice: 9800,
-          grossProfit: 4900,
-          refurbBuffer: 600,
-          platformFee: 950,
-          netProfit: 3350,
-          roiPercentage: 68,
-          negotiationScript: 'Te ofrezco $4,800 MXN en efectivo inmediato hoy mismo sin vueltas, tomando en cuenta la salud de batería y comisiones de venta.',
-        },
-        buyer: {
-          targetMin: 8500,
-          targetMax: 9900,
-          scamWarningThreshold: 5880,
-          antiFraudAdvice: 'Desconfía de publicaciones por debajo de $5,900 MXN. Exige ver la cuenta iCloud desvinculada enfrente de ti y prueba chip Telcel/AT&T.',
-          verificationChecklist: ['Cerrar sesión de iCloud y formatear en persona', 'Revisar pantalla original en Ajustes (Pieza desconocida)', 'Probar Face ID y cámaras x0.5, x1, x3', 'Verificar que no tenga reporte de robo o bloqueo de operadora'],
-        },
-        research: {
-          trend: 'Estable con alta liquidez',
-          annualDepreciationRate: '12% anual (muy resistente a depreciación)',
-          liquidityIndex: 'Alta',
-          marketNotes: 'Los modelos Pro de Apple conservan el valor más alto del mercado mexicano. Tiempo promedio de venta: 3 a 6 días.',
-          bestTimeToSell: 'Antes de los lanzamientos de septiembre de Apple.',
-        },
-      },
-      formattedReport: `#### 📸 Identificación del Producto
-- **Producto:** Apple iPhone 13 Pro (128GB) Grafito
-- **Estado Aparente:** Usado - Como nuevo
-- *“Para afinar el precio exacto, indícame: ¿Salud de batería arriba del 85%? ¿Caja original incluida?”*
-
-#### 📊 Radiografía de Mercado (México)
-- **Nuevo (Retail):** $18,999 MXN – $21,999 MXN
-- **Usado (Rango de mercado):** $8,500 MXN – $11,800 MXN
-- **Promedio Usado Real:** **$9,800 MXN**
-
----
-
-#### 🎯 Estrategia Recomendada (Venta Particular)
-- ⚡ **Venta Rápida:** **$8,200 MXN** (Ideal para cerrar trato en menos de 48-72 hrs).
-- ⚖️ **Precio Justo:** **$9,800 MXN** (Recomendado para Mercado Libre / Marketplace).
-- ⏳ **Venta Paciente:** **$11,200 MXN** (Si cuentas con caja, accesorios y cero prisa).
-- 📝 **Ficha para Publicar (Copia y Pega):**
-  - **Título SEO sugerido:** iPhone 13 Pro 128GB Grafito Libre Fábrica Impecable Con Caja
-  - **Descripción corta:** iPhone 13 Pro 128GB Grafito estética 9.5/10. Libre de fábrica para cualquier chip. Batería al 88%, incluye caja original y cable. Trato en plaza comercial.`,
-      timestamp: new Date().toISOString(),
-      imagePreviewUrl: '/src/assets/images/sample_iphone_1793599980253.jpg',
-    },
-  },
-  {
     id: 'sample-ps5-digital',
-    name: 'Sony PlayStation 5 Edición Digital',
-    tagline: 'Consola con alta rotación en el mercado gamer mexicano',
-    category: 'Consolas & Videojuegos',
+    name: 'Sony PlayStation 5 con DualSense Blanco',
+    tagline: 'La consola más vendida y con mayor rotación en México',
+    category: 'Consolas de Videojuegos',
     imagePath: '/src/assets/images/sample_ps5_1793599980617.jpg',
     apparentCondition: 'Como nuevo',
-    description: 'Consola PS5 Digital color blanco con control DualSense, cable HDMI de alta velocidad, cable de corriente y base original.',
+    description: 'Consola Sony PlayStation 5 con mando DualSense blanco, cables originales HDMI de ultra alta velocidad, cable de corriente y base.',
     initialResult: {
       product: {
         brand: 'Sony',
-        model: 'PlayStation 5 Edición Digital (825GB)',
-        exactName: 'Sony PlayStation 5 Digital Edition con DualSense',
+        model: 'PlayStation 5 (825GB / Slim)',
+        exactName: 'Sony PlayStation 5 con DualSense Blanco',
         apparentCondition: 'Como nuevo',
         confidence: 98,
-        category: 'Consolas',
-        keySpecs: ['825GB SSD Ultrarrápido', 'Gráficos 4K HDR Ray Tracing', 'Mando DualSense con retroalimentación háptica', 'Sin lector de disco'],
+        category: 'Consolas de Videojuegos',
+        keySpecs: ['825GB SSD Ultrarrápido', 'Gráficos 4K HDR Ray Tracing', 'Mando DualSense Háptico', 'Puertos USB-C y HDMI 2.1'],
         notes: 'Carcasas laterales limpias sin rayones, control sin drift en análogos.',
       },
       microCheck: [
@@ -149,285 +40,531 @@ export const SAMPLE_PRODUCTS: SampleItem[] = [
         },
         {
           id: 'digital_account',
-          question: '¿Se entrega con o sin juegos/suscripción?',
-          options: ['Solo consola reseteada de fábrica', 'Incluye cuenta con juegos digitales'],
-          selectedAnswer: 'Solo consola reseteada de fábrica',
+          question: '¿Cuenta con lector de disco o es edición digital?',
+          options: ['Edición Estándar (Con Lector)', 'Edición Digital'],
+          selectedAnswer: 'Edición Estándar (Con Lector)',
+        },
+        {
+          id: 'box_condition',
+          question: '¿Incluye caja original y manuales?',
+          options: ['Con caja y uniceles originales', 'Solo consola y cables sueltos'],
+          selectedAnswer: 'Con caja y uniceles originales',
         },
       ],
       marketRadiography: {
-        retailNewMin: 9499,
-        retailNewMax: 11299,
-        usedMin: 6500,
-        usedMax: 8200,
-        usedAverage: 7300,
+        retailNewMin: 9899,
+        retailNewMax: 11499,
+        usedMin: 7200,
+        usedMax: 9200,
+        usedAverage: 8200,
         currency: 'MXN',
         platformEstimates: {
-          mercadoLibre: 7600,
-          amazon: 8999,
-          marketplace: 6900,
+          mercadoLibre: 8600,
+          amazon: 9499,
+          marketplace: 7800,
         },
       },
       strategies: {
         c2c: {
-          fastSalePrice: 6100,
-          fairPrice: 7300,
-          patientSalePrice: 8100,
-          listingTitle: 'Sony PS5 PlayStation 5 Digital Impecable Con Control DualSense y Base',
-          listingDescription: 'Consola Sony PlayStation 5 Edición Digital en perfecto estado 10/10. Incluye mando inalámbrico DualSense blanco sin drift, cables HDMI y de poder originales más base. Lista para conectar y jugar.',
-          tips: ['Graba un video corto encendiendo y navegando en la PlayStation Store', 'Entrega en punto neutro con corriente para probar si el comprador lo solicita'],
+          fastSalePrice: 6900,
+          fairPrice: 8200,
+          patientSalePrice: 9100,
+          listingTitle: 'Sony PS5 PlayStation 5 Impecable Con Control DualSense Caja y Cables',
+          listingDescription: 'Consola Sony PlayStation 5 en excelente estado 10/10. Mando DualSense sin drift, cables originales y base. Se entrega formateada de fábrica lista para jugar. Trato serio en punto vigilado.',
+          tips: ['Graba un video corto navegando en la PS Store para demostrar que no está baneada', 'Entrega en plaza comercial vigilada con acceso a corriente para probar'],
         },
         flipping: {
-          maxPurchasePrice: 3650,
-          targetResalePrice: 7300,
-          grossProfit: 3650,
-          refurbBuffer: 300,
-          platformFee: 650,
-          netProfit: 2700,
-          roiPercentage: 74,
-          negotiationScript: 'Ofrezco $3,600 MXN en efectivo inmediato hoy mismo, pago seguro en persona.',
+          maxPurchasePrice: 4100,
+          targetResalePrice: 8200,
+          grossProfit: 4100,
+          refurbBuffer: 350,
+          platformFee: 800,
+          netProfit: 2950,
+          roiPercentage: 72,
+          negotiationScript: 'Te ofrezco $4,100 MXN en efectivo inmediato hoy mismo, trato en mano seguro y sin vueltas.',
         },
         buyer: {
-          targetMin: 6400,
-          targetMax: 7400,
-          scamWarningThreshold: 4380,
-          antiFraudAdvice: 'Alerta de estafa: Cualquier PS5 por menos de $4,500 MXN suele ser anticipo fantasma. Jamás deposites antes de tenerla en las manos.',
-          verificationChecklist: ['Probar conexión a internet y acceso a PlayStation Network (que no esté baneada)', 'Revisar drift en los sticks del control', 'Verificar puertos USB y conector HDMI'],
+          targetMin: 7200,
+          targetMax: 8400,
+          scamWarningThreshold: 4900,
+          antiFraudAdvice: 'Alerta de estafa: Cualquier PS5 por menos de $5,000 MXN suele ser gancho para pedir apartado por OXXO. Nunca des anticipos.',
+          verificationChecklist: ['Probar conexión a internet y acceso a PSN (que no esté baneada)', 'Revisar drift en sticks del control', 'Verificar puerto HDMI y lector de discos'],
         },
         research: {
-          trend: 'Alta demanda sostenida en México',
-          annualDepreciationRate: '8% anual',
+          trend: 'Alta demanda sostenida en territorio nacional',
+          annualDepreciationRate: '8% anual (muy resistente a pérdida de valor)',
           liquidityIndex: 'Alta',
-          marketNotes: 'De las consolas más fáciles de vender en México en menos de 5 días si está a buen precio.',
-          bestTimeToSell: 'Días previos a quincena, Navidad o Día del Niño.',
+          marketNotes: 'La consola con mayor volumen de transacciones en México. Tiempo promedio de venta: 2 a 4 días.',
+          bestTimeToSell: 'Viernes de quincena o temporadas decembrinas.',
         },
       },
-      formattedReport: `#### 📸 Identificación del Producto
-- **Producto:** Sony PlayStation 5 Edición Digital (825GB)
+      formattedReport: `### 🇲🇽 SnapPrice MX - Valuación Gamer Oficial
+#### 📸 Identificación del Producto
+- **Producto:** Sony PlayStation 5 con DualSense Blanco
 - **Estado Aparente:** Como nuevo
 - *“Para afinar el precio exacto, indícame: ¿Incluye 1 o 2 mandos DualSense?”*
 
 #### 📊 Radiografía de Mercado (México)
-- **Nuevo (Retail):** $9,499 MXN – $11,299 MXN
-- **Usado (Rango de mercado):** $6,500 MXN – $8,200 MXN
-- **Promedio Usado Real:** **$7,300 MXN**
+- **Nuevo (Retail):** $9,899 MXN – $11,499 MXN
+- **Usado (Rango de mercado):** $7,200 MXN – $9,200 MXN
+- **Promedio Usado Real:** **$8,200 MXN**
 
 ---
 
 #### 🎯 Estrategia Recomendada (Venta Particular)
-- ⚡ **Venta Rápida:** **$6,100 MXN** (Ideal para cerrar trato en pocos días).
-- ⚖️ **Precio Justo:** **$7,300 MXN** (Recomendado para Mercado Libre / Marketplace).
-- ⏳ **Venta Paciente:** **$8,100 MXN** (Si cuentas con caja, accesorios y cero prisa).
-- 📝 **Ficha para Publicar (Copia y Pega):**
-  - **Título SEO sugerido:** Sony PS5 PlayStation 5 Digital Impecable Con Control DualSense y Base
-  - **Descripción corta:** PS5 Digital en estado impecable. Control DualSense sin drift, cables y base original. Lista para entrega en plaza comercial.`,
+- ⚡ **Venta Rápida:** **$6,900 MXN**
+- ⚖️ **Precio Justo:** **$8,200 MXN**
+- ⏳ **Venta Paciente:** **$9,100 MXN**`,
       timestamp: new Date().toISOString(),
       imagePreviewUrl: '/src/assets/images/sample_ps5_1793599980617.jpg',
+      realMarketSamples: [
+        {
+          platform: 'Mercado Libre MX',
+          title: 'Sony PlayStation 5 825GB Con Caja y 1 Control DualSense',
+          price: 8599,
+          condition: 'Usado - Como nuevo',
+          sellerReputation: 'MercadoLíder Platinum (4.9★)',
+          url: 'https://listado.mercadolibre.com.mx/playstation-5',
+          isSold: true,
+          dateReported: 'Vendido ayer',
+        },
+        {
+          platform: 'Facebook Marketplace',
+          title: 'PS5 Estándar Con Lector 1 Control Entrega CDMX',
+          price: 7900,
+          condition: 'Usado - Bueno',
+          sellerReputation: 'Vendedor Gamer Verificado (5.0★)',
+          url: 'https://www.facebook.com/marketplace/search/?query=playstation+5',
+          isSold: false,
+          dateReported: 'Activa hace 4 horas',
+        },
+        {
+          platform: 'Amazon México',
+          title: 'PlayStation 5 Consola Reacondicionada Certificada Renewed',
+          price: 9299,
+          condition: 'Reacondicionado Excelente',
+          sellerReputation: 'Garantía 90 días Amazon Renewed',
+          url: 'https://www.amazon.com.mx/s?k=playstation+5+renewed',
+          isSold: false,
+          dateReported: 'Disponible con Prime',
+        },
+        {
+          platform: 'eBay México',
+          title: 'Sony PS5 Console White Controller Complete in Box',
+          price: 8450,
+          condition: 'Usado - Excelente',
+          sellerReputation: 'Top Rated Seller (99.6%)',
+          url: 'https://www.ebay.com/sch/i.html?_nkw=playstation+5+console',
+          isSold: true,
+          dateReported: 'Transacción completada',
+        },
+      ],
+      fairMarketCalculation: {
+        sampleCount: 19,
+        outliersExcluded: 3,
+        medianPrice: 8200,
+        formulaNotes: 'Mediana de 16 publicaciones válidas tras descartar 2 estafas con precio irreal (-48%) y 1 sobreprecio de importación.',
+        confidenceScore: 98,
+      },
+      todayRecommendation: {
+        todayDate: 'Viernes, 6 de noviembre de 2026',
+        recommendedSellPriceToday: 6900,
+        expectedSaleVelocity: 'Venta rápida (24 a 48 hrs)',
+        marketMomentum: 'Fin de semana con pico de búsquedas gamer en México (+40% de tráfico)',
+        optimalListingTime: 'Publicar hoy entre 6:00 PM y 9:30 PM',
+        gamingDemandIndex: 'Muy Alta',
+        cashInHandFast: 6900,
+      },
     },
   },
   {
-    id: 'sample-macbook-air-m1',
-    name: 'Apple MacBook Air M1 (2020) 256GB Gris Espacial',
-    tagline: 'La laptop preferida para estudiantes y profesionales en México',
-    category: 'Computadoras & Laptops',
-    imagePath: '/src/assets/images/sample_macbook_1793599981272.jpg',
-    apparentCondition: 'Usado - Bueno',
-    description: 'MacBook Air con chip Apple Silicon M1, 8GB de memoria RAM unificada y 256GB SSD, teclado en español con Touch ID.',
+    id: 'sample-switch-oled',
+    name: 'Nintendo Switch OLED 64GB Blanca',
+    tagline: 'La consola portátil más codiciada para jugar en cualquier lugar',
+    category: 'Consolas de Videojuegos',
+    imagePath: '/src/assets/images/sample_ps5_1793599980617.jpg',
+    apparentCondition: 'Como nuevo',
+    description: 'Nintendo Switch modelo OLED con pantalla de 7 pulgadas color blanco, Joy-Cons originales sin drift, dock con puerto LAN y cargador original.',
     initialResult: {
       product: {
-        brand: 'Apple',
-        model: 'MacBook Air M1 (8GB / 256GB SSD)',
-        exactName: 'Apple MacBook Air 13" Chip M1 Gris Espacial',
-        apparentCondition: 'Usado - Bueno',
+        brand: 'Nintendo',
+        model: 'Nintendo Switch OLED (64GB)',
+        exactName: 'Nintendo Switch OLED 64GB Blanca',
+        apparentCondition: 'Como nuevo',
         confidence: 97,
-        category: 'Laptops',
-        keySpecs: ['Chip Apple M1 8 núcleos CPU', '8GB Memoria Unificada', '256GB SSD PCIe', 'Pantalla Retina True Tone de 13.3"'],
-        notes: 'Teclado y trackpad impecables, ligeros roces de uso en esquinas inferiores.',
+        category: 'Consolas Portátiles',
+        keySpecs: ['Pantalla OLED vibrante de 7"', '64GB Almacenamiento Interno', 'Dock con puerto LAN Ethernet', 'Audio mejorado y soporte ancho'],
+        notes: 'Pantalla OLED con mica protectora de cristal templado, Joy-Cons calibrados sin drift.',
       },
       microCheck: [
         {
-          id: 'battery_cycles',
-          question: '¿Cuántos ciclos de batería tiene la MacBook?',
-          options: ['Menos de 200 ciclos (Excelente)', '200 a 500 ciclos (Normal)', 'Más de 500 ciclos'],
-          selectedAnswer: '200 a 500 ciclos (Normal)',
+          id: 'joycons_drift',
+          question: '¿Los Joy-Cons presentan algún tipo de drift o desgaste?',
+          options: ['100% calibrados sin drift', 'Drift leve en joystick izquierdo'],
+          selectedAnswer: '100% calibrados sin drift',
         },
         {
-          id: 'keyboard_layout',
-          question: '¿La distribución del teclado tiene la letra Ñ (Español)?',
-          options: ['Sí, teclado en Español con tecla Ñ', 'No, teclado en Inglés (US)'],
-          selectedAnswer: 'Sí, teclado en Español con tecla Ñ',
+          id: 'games_included',
+          question: '¿Incluye juegos físicos o tarjeta microSD?',
+          options: ['Solo consola con accesorios', 'Con 1 juego físico (Zelda/Mario)', 'Con microSD 128GB+'],
+          selectedAnswer: 'Solo consola con accesorios',
         },
       ],
       marketRadiography: {
-        retailNewMin: 13999,
-        retailNewMax: 16999,
-        usedMin: 8800,
-        usedMax: 11900,
-        usedAverage: 10200,
+        retailNewMin: 6299,
+        retailNewMax: 7699,
+        usedMin: 4500,
+        usedMax: 5900,
+        usedAverage: 5100,
         currency: 'MXN',
         platformEstimates: {
-          mercadoLibre: 10800,
-          amazon: 12400,
-          marketplace: 9600,
+          mercadoLibre: 5350,
+          amazon: 6199,
+          marketplace: 4800,
         },
       },
       strategies: {
         c2c: {
-          fastSalePrice: 8600,
-          fairPrice: 10200,
-          patientSalePrice: 11800,
-          listingTitle: 'MacBook Air M1 8GB 256GB Gris Espacial Teclado Español Con Cargador Original',
-          listingDescription: 'Apple MacBook Air M1 Gris Espacial de 13 pulgadas, 8GB RAM y 256GB SSD. Batería con excelente autonomía, teclado en español con tecla Ñ y Touch ID. Incluye cargador Apple original USB-C de 30W.',
-          tips: ['Muestra captura de pantalla con los ciclos de batería y número de serie en Acerca de esta Mac', 'Aclara si tienes la caja original para defender el precio'],
+          fastSalePrice: 4400,
+          fairPrice: 5100,
+          patientSalePrice: 5800,
+          listingTitle: 'Nintendo Switch OLED 64GB Blanca Impecable Sin Drift En Caja',
+          listingDescription: 'Nintendo Switch OLED color blanco estética 10/10 con mica de cristal. Joy-Cons al 100% sin drift. Incluye dock LAN, cargador original y caja completa. Trato serio y entrega personal.',
+          tips: ['Muestra foto de la prueba de calibración de palancas en Ajustes', 'Aclara si tiene mica de cristal templado'],
         },
         flipping: {
-          maxPurchasePrice: 5100,
-          targetResalePrice: 10200,
-          grossProfit: 5100,
-          refurbBuffer: 500,
-          platformFee: 900,
-          netProfit: 3700,
-          roiPercentage: 72,
-          negotiationScript: 'Tengo $5,000 MXN en mano para compra el día de hoy, pago de contado en efectivo.',
+          maxPurchasePrice: 2550,
+          targetResalePrice: 5100,
+          grossProfit: 2550,
+          refurbBuffer: 250,
+          platformFee: 500,
+          netProfit: 1800,
+          roiPercentage: 70,
+          negotiationScript: 'Te ofrezco $2,500 MXN en efectivo inmediato hoy mismo sin intermediarios.',
         },
         buyer: {
-          targetMin: 8800,
-          targetMax: 10500,
-          scamWarningThreshold: 6120,
-          antiFraudAdvice: '¡Cuidado con computadoras con bloqueo empresarial (MDM / DEP / Jamf) o bloqueo de activación de iCloud! Siempre formatea desde cero con Wi-Fi.',
-          verificationChecklist: ['Iniciar modo recuperación y verificar que no tenga candado EFI / MDM', 'Probar todos los puertos Thunderbolt y conector de audífonos', 'Revisar que la pantalla no tenga manchas en el revestimiento antireflejante'],
+          targetMin: 4500,
+          targetMax: 5200,
+          scamWarningThreshold: 3100,
+          antiFraudAdvice: 'Desconfía de Switch OLED por menos de $3,500 MXN. Pide revisar el número de serie y probar ambos Joy-Cons.',
+          verificationChecklist: ['Probar calibración de Joy-Cons en el menú', 'Revisar pantalla táctil y conexión al dock', 'Probar lector de tarjetas de juego'],
         },
         research: {
-          trend: 'Estable con demanda muy alta en ciclo escolar',
+          trend: 'Demanda muy estable y alta reventa',
+          annualDepreciationRate: '9% anual',
+          liquidityIndex: 'Alta',
+          marketNotes: 'Se vende en menos de 48 horas si tiene empaque y Joy-Cons sin drift.',
+          bestTimeToSell: 'Días previos a vacaciones o quincena.',
+        },
+      },
+      formattedReport: `### 🇲🇽 SnapPrice MX - Valuación Gamer Oficial
+#### 📸 Identificación del Producto
+- **Producto:** Nintendo Switch OLED 64GB Blanca
+- **Estado Aparente:** Como nuevo
+- *“Para afinar el precio exacto, indícame: ¿Los Joy-Cons están 100% sin drift?”*
+
+#### 📊 Radiografía de Mercado (México)
+- **Nuevo (Retail):** $6,299 MXN – $7,699 MXN
+- **Usado (Rango de mercado):** $4,500 MXN – $5,900 MXN
+- **Promedio Usado Real:** **$5,100 MXN**
+
+---
+
+#### 🎯 Estrategia Recomendada (Venta Particular)
+- ⚡ **Venta Rápida:** **$4,400 MXN**
+- ⚖️ **Precio Justo:** **$5,100 MXN**
+- ⏳ **Venta Paciente:** **$5,800 MXN**`,
+      timestamp: new Date().toISOString(),
+      imagePreviewUrl: '/src/assets/images/sample_ps5_1793599980617.jpg',
+      realMarketSamples: [
+        {
+          platform: 'Mercado Libre MX',
+          title: 'Nintendo Switch OLED Blanca 64GB Con Caja Impecable',
+          price: 5299,
+          condition: 'Usado - Como nuevo',
+          sellerReputation: 'MercadoLíder Platinum (4.9★)',
+          url: 'https://listado.mercadolibre.com.mx/nintendo-switch-oled',
+          isSold: true,
+          dateReported: 'Vendido esta semana',
+        },
+        {
+          platform: 'Facebook Marketplace',
+          title: 'Switch OLED Blanca Completa Con Dock y Cables',
+          price: 4900,
+          condition: 'Usado - Excelente',
+          sellerReputation: 'Perfil Verificado (5★)',
+          url: 'https://www.facebook.com/marketplace/search/?query=nintendo+switch+oled',
+          isSold: false,
+          dateReported: 'Publicado hoy',
+        },
+      ],
+      fairMarketCalculation: {
+        sampleCount: 17,
+        outliersExcluded: 2,
+        medianPrice: 5100,
+        formulaNotes: 'Mediana de 15 publicaciones válidas en México tras eliminar sobreprecios.',
+        confidenceScore: 97,
+      },
+      todayRecommendation: {
+        todayDate: 'Viernes, 6 de noviembre de 2026',
+        recommendedSellPriceToday: 4400,
+        expectedSaleVelocity: 'Venta rápida (24 a 48 hrs)',
+        marketMomentum: 'Excelente rotación en fines de semana',
+        optimalListingTime: 'Publicar hoy entre 5:30 PM y 9:00 PM',
+        gamingDemandIndex: 'Alta',
+        cashInHandFast: 4400,
+      },
+    },
+  },
+  {
+    id: 'sample-xbox-series-x',
+    name: 'Microsoft Xbox Series X 1TB Negra',
+    tagline: 'Potencia 4K 120 FPS y retrocompatibilidad total con Game Pass',
+    category: 'Consolas de Videojuegos',
+    imagePath: '/src/assets/images/sample_ps5_1793599980617.jpg',
+    apparentCondition: 'Como nuevo',
+    description: 'Xbox Series X con 1TB de SSD NVMe de alta velocidad, lector de discos 4K UHD Blu-ray, control inalámbrico Xbox negro y cable HDMI 2.1.',
+    initialResult: {
+      product: {
+        brand: 'Microsoft',
+        model: 'Xbox Series X (1TB)',
+        exactName: 'Microsoft Xbox Series X 1TB Negra',
+        apparentCondition: 'Como nuevo',
+        confidence: 98,
+        category: 'Consolas de Videojuegos',
+        keySpecs: ['12 Teraflops GPU', '1TB SSD NVMe Custom', 'Lector 4K Blu-ray Disc', 'Quick Resume & 120 FPS'],
+        notes: 'Ventilador silencioso, puerto HDMI en perfecto estado, control sin desgaste en grips.',
+      },
+      microCheck: [
+        {
+          id: 'controller_series',
+          question: '¿El control es el original de Series X o genérico?',
+          options: ['Control original Xbox Series negro', 'Control genérico / alámbrico', '2 Controles originales'],
+          selectedAnswer: 'Control original Xbox Series negro',
+        },
+        {
+          id: 'series_box',
+          question: '¿Cuenta con empaque de fábrica?',
+          options: ['Con caja original', 'Solo consola con cables'],
+          selectedAnswer: 'Con caja original',
+        },
+      ],
+      marketRadiography: {
+        retailNewMin: 11499,
+        retailNewMax: 13299,
+        usedMin: 7200,
+        usedMax: 9300,
+        usedAverage: 8200,
+        currency: 'MXN',
+        platformEstimates: {
+          mercadoLibre: 8600,
+          amazon: 9899,
+          marketplace: 7800,
+        },
+      },
+      strategies: {
+        c2c: {
+          fastSalePrice: 6900,
+          fairPrice: 8200,
+          patientSalePrice: 9100,
+          listingTitle: 'Xbox Series X 1TB Negra Impecable 10/10 Con Control y Caja',
+          listingDescription: 'Consola Xbox Series X de 1TB en impecable estado estético y funcional. Incluye mando original inalámbrico, cable HDMI 2.1 ultra rápido y caja. Probada al 100%. Entrega en plaza comercial.',
+          tips: ['Destaca si incluye meses de Game Pass activo', 'Muestra que el lector de discos lee juegos sin trabarse'],
+        },
+        flipping: {
+          maxPurchasePrice: 4100,
+          targetResalePrice: 8200,
+          grossProfit: 4100,
+          refurbBuffer: 300,
+          platformFee: 750,
+          netProfit: 3050,
+          roiPercentage: 74,
+          negotiationScript: 'Te ofrezco $4,000 MXN en efectivo inmediato hoy mismo sin vueltas.',
+        },
+        buyer: {
+          targetMin: 7200,
+          targetMax: 8400,
+          scamWarningThreshold: 4800,
+          antiFraudAdvice: 'Desconfía de ofertas por debajo de $5,000 MXN en Marketplace. Revisa que no tenga reporte de consola suspendida de Xbox Live.',
+          verificationChecklist: ['Conectar a red Wi-Fi y verificar sesión de Xbox Live', 'Probar lector de discos con un juego de Xbox', 'Comprobar que el ventilador no haga ruidos extraños'],
+        },
+        research: {
+          trend: 'Demanda constante impulsada por Xbox Game Pass',
           annualDepreciationRate: '10% anual',
           liquidityIndex: 'Alta',
-          marketNotes: 'El MacBook Air M1 sigue siendo el equipo más cotizado de Apple por su relación potencia/batería/precio.',
-          bestTimeToSell: 'Agosto/Septiembre (Regreso a clases) y Enero.',
+          marketNotes: 'Consola muy buscada en Marketplace para jugar lanzamientos en 4K.',
+          bestTimeToSell: 'Temporada de aguinaldos o quincena.',
         },
       },
-      formattedReport: `#### 📸 Identificación del Producto
-- **Producto:** Apple MacBook Air M1 13" (8GB / 256GB SSD)
-- **Estado Aparente:** Usado - Grado Bueno
-- *“Para afinar el precio exacto, indícame: ¿Ciclos de batería menores a 300? ¿Teclado en español con Ñ?”*
+      formattedReport: `### 🇲🇽 SnapPrice MX - Valuación Gamer Oficial
+#### 📸 Identificación del Producto
+- **Producto:** Microsoft Xbox Series X 1TB Negra
+- **Estado Aparente:** Como nuevo
+- *“Para afinar el precio exacto, indícame: ¿Cuenta con caja original?”*
 
 #### 📊 Radiografía de Mercado (México)
-- **Nuevo (Retail):** $13,999 MXN – $16,999 MXN
-- **Usado (Rango de mercado):** $8,800 MXN – $11,900 MXN
-- **Promedio Usado Real:** **$10,200 MXN**
+- **Nuevo (Retail):** $11,499 MXN – $13,299 MXN
+- **Usado (Rango de mercado):** $7,200 MXN – $9,300 MXN
+- **Promedio Usado Real:** **$8,200 MXN**
 
 ---
 
 #### 🎯 Estrategia Recomendada (Venta Particular)
-- ⚡ **Venta Rápida:** **$8,600 MXN** (Ideal para cerrar trato en pocos días).
-- ⚖️ **Precio Justo:** **$10,200 MXN** (Recomendado para Mercado Libre / Marketplace).
-- ⏳ **Venta Paciente:** **$11,800 MXN** (Si cuentas con caja, accesorios y cero prisa).
-- 📝 **Ficha para Publicar (Copia y Pega):**
-  - **Título SEO sugerido:** MacBook Air M1 8GB 256GB Gris Espacial Teclado Español Con Cargador Original
-  - **Descripción corta:** MacBook Air M1 8GB/256GB en gran estado. Teclado español con Ñ, batería al 89%. Incluye cargador original Apple de 30W. Trato seguro.`,
+- ⚡ **Venta Rápida:** **$6,900 MXN**
+- ⚖️ **Precio Justo:** **$8,200 MXN**
+- ⏳ **Venta Paciente:** **$9,100 MXN**`,
       timestamp: new Date().toISOString(),
-      imagePreviewUrl: '/src/assets/images/sample_macbook_1793599981272.jpg',
+      imagePreviewUrl: '/src/assets/images/sample_ps5_1793599980617.jpg',
+      realMarketSamples: [
+        {
+          platform: 'Mercado Libre MX',
+          title: 'Consola Xbox Series X 1TB Con 1 Control y Cables',
+          price: 8499,
+          condition: 'Usado - Como nuevo',
+          sellerReputation: 'MercadoLíder Platinum (4.9★)',
+          url: 'https://listado.mercadolibre.com.mx/xbox-series-x',
+          isSold: true,
+          dateReported: 'Vendido recientemente',
+        },
+      ],
+      fairMarketCalculation: {
+        sampleCount: 15,
+        outliersExcluded: 2,
+        medianPrice: 8200,
+        formulaNotes: 'Mediana calculada a partir de transacciones reales en México.',
+        confidenceScore: 97,
+      },
+      todayRecommendation: {
+        todayDate: 'Viernes, 6 de noviembre de 2026',
+        recommendedSellPriceToday: 6900,
+        expectedSaleVelocity: 'Venta rápida (24 a 48 hrs)',
+        marketMomentum: 'Excelente liquidez para gamers en México',
+        optimalListingTime: 'Publicar hoy entre 6:00 PM y 9:30 PM',
+        gamingDemandIndex: 'Alta',
+        cashInHandFast: 6900,
+      },
     },
   },
   {
-    id: 'sample-sony-camera',
-    name: 'Cámara Sony Alpha a7 IV Mirrorless Kit 28-70mm',
-    tagline: 'Cámara profesional full-frame de alta gama para creadores y fotógrafos',
-    category: 'Fotografía & Video',
-    imagePath: '/src/assets/images/sample_camera_1793599980915.jpg',
+    id: 'sample-zelda-totk',
+    name: 'The Legend of Zelda: Tears of the Kingdom (Switch Físico)',
+    tagline: 'Juego físico insignia de Nintendo con el valor de reventa más alto',
+    category: 'Videojuegos Físicos',
+    imagePath: '/src/assets/images/sample_ps5_1793599980617.jpg',
     apparentCondition: 'Como nuevo',
-    description: 'Cámara Sony Alpha 7 IV de 33MP con lente zoom FE 28-70mm F3.5-5.6 OSS, batería Sony NP-FZ100 original, correa y cargador.',
+    description: 'Cartucho físico original de Nintendo Switch versión nacional/americana con caja y carátula impecables sin roturas.',
     initialResult: {
       product: {
-        brand: 'Sony',
-        model: 'Alpha 7 IV (ILCE-7M4) con Kit 28-70mm',
-        exactName: 'Sony Alpha 7 IV Full-Frame Mirrorless Kit',
+        brand: 'Nintendo',
+        model: 'Tears of the Kingdom (Edición Física Switch)',
+        exactName: 'The Legend of Zelda: Tears of the Kingdom (Físico Switch)',
         apparentCondition: 'Como nuevo',
-        confidence: 95,
-        category: 'Cámaras',
-        keySpecs: ['Sensor Exmor R CMOS 33 Megapíxeles', 'Grabación 4K 60p 10-bit 4:2:2', 'Enfoque automático Eye AF en tiempo real', 'Estabilización de imagen en cuerpo de 5 ejes'],
-        notes: 'Sensor limpio sin motas de polvo, montura metálica sin desgaste, pantalla abatible sin arañazos.',
+        confidence: 99,
+        category: 'Videojuegos Físicos',
+        keySpecs: ['Cartucho original de Nintendo', 'Caja y portada original', 'Región Americana (Compatible con cuentas de México)'],
+        notes: 'Pines dorados del cartucho limpios, carátula sin dobleces ni roturas.',
       },
       microCheck: [
         {
-          id: 'shutter_count',
-          question: '¿Cuál es el conteo aproximado de disparos (Shutter count)?',
-          options: ['Menos de 10,000 disparos', '10,000 a 40,000 disparos', 'Más de 50,000 disparos'],
-          selectedAnswer: 'Menos de 10,000 disparos',
-        },
-        {
-          id: 'included_lens',
-          question: '¿Incluye el lente zoom kit 28-70mm o solo cuerpo?',
-          options: ['Cuerpo + Lente 28-70mm', 'Solo el cuerpo (Body only)', 'Cuerpo + Lente Prime 50mm'],
-          selectedAnswer: 'Cuerpo + Lente 28-70mm',
+          id: 'case_status',
+          question: '¿Cuenta con su estuche plástico y portada original?',
+          options: ['Con caja y portada original', 'Solo cartucho suelto'],
+          selectedAnswer: 'Con caja y portada original',
         },
       ],
       marketRadiography: {
-        retailNewMin: 44999,
-        retailNewMax: 52999,
-        usedMin: 32000,
-        usedMax: 41000,
-        usedAverage: 36500,
+        retailNewMin: 1299,
+        retailNewMax: 1599,
+        usedMin: 850,
+        usedMax: 1100,
+        usedAverage: 950,
         currency: 'MXN',
         platformEstimates: {
-          mercadoLibre: 38200,
-          amazon: 46000,
-          marketplace: 34500,
+          mercadoLibre: 1050,
+          amazon: 1299,
+          marketplace: 900,
         },
       },
       strategies: {
         c2c: {
-          fastSalePrice: 30500,
-          fairPrice: 36500,
-          patientSalePrice: 40500,
-          listingTitle: 'Sony Alpha A7 IV Kit Lente 28-70mm Impecable Pocos Disparos Con Caja',
-          listingDescription: 'Sony Alpha a7 IV de 33MP en estado impecable 9.8/10. Muy bajo número de disparos (<8,000). Sensor completamente libre de polvo. Incluye objetivo FE 28-70mm OSS, batería original Sony y cargador. Ideal para video 4K 10-bit profesional.',
-          tips: ['Sube captura del reporte de Shutter Count de camera-shutter-count.com', 'Permite inspección de sensor en persona antes del pago'],
+          fastSalePrice: 800,
+          fairPrice: 950,
+          patientSalePrice: 1050,
+          listingTitle: 'The Legend of Zelda Tears of the Kingdom Nintendo Switch Físico Como Nuevo',
+          listingDescription: 'Juego original The Legend of Zelda Tears of the Kingdom para Nintendo Switch. Estuche y cartucho en perfecto estado 10/10. Pines limpios funcionando al 100%. Entrega en punto céntrico.',
+          tips: ['Fotografía los pines traseros del cartucho para comprobar que son dorados originales', 'Aclara que es compatible con cualquier modelo de Switch'],
         },
         flipping: {
-          maxPurchasePrice: 17500,
-          targetResalePrice: 36500,
-          grossProfit: 19000,
-          refurbBuffer: 1200,
-          platformFee: 2800,
-          netProfit: 15000,
-          roiPercentage: 85,
-          negotiationScript: 'Ofrezco $17,000 MXN en transferencia inmediata o efectivo para fotógrafos que busquen liquidar equipo rápido.',
+          maxPurchasePrice: 450,
+          targetResalePrice: 950,
+          grossProfit: 500,
+          refurbBuffer: 50,
+          platformFee: 90,
+          netProfit: 360,
+          roiPercentage: 80,
+          negotiationScript: 'Te ofrezco $450 MXN en efectivo inmediato hoy mismo, paso por él.',
         },
         buyer: {
-          targetMin: 32000,
-          targetMax: 37500,
-          scamWarningThreshold: 21900,
-          antiFraudAdvice: 'En equipo fotográfico abundan perfiles falsos que piden depósito de apartado. NUNCA transfieras sin probar el sensor con una foto a F/22 a una pared blanca.',
-          verificationChecklist: ['Disparar a F/22 a una superficie blanca para detectar hongos o rayaduras en el sensor', 'Verificar funcionamiento del enfoque continuo en video', 'Comprobar que ambas ranuras SD / CFexpress lean correctamente'],
+          targetMin: 850,
+          targetMax: 980,
+          scamWarningThreshold: 550,
+          antiFraudAdvice: 'Desconfía de precios menores a $550 MXN o cuentas que vendan "códigos digitales por WhatsApp". Exige cartucho físico probado.',
+          verificationChecklist: ['Comprobar que el cartucho sea reconocido al insertarlo en la Switch', 'Revisar que la portada no sea una copia impresa en papel bond', 'Verificar código de región USA/MEX'],
         },
         research: {
-          trend: 'Estable con alta retención de valor en mercado pro',
-          annualDepreciationRate: '9% anual',
-          liquidityIndex: 'Media',
-          marketNotes: 'Equipo de gama alta para nicho profesional. La venta suele tardar entre 10 y 20 días pero el margen es muy amplio.',
-          bestTimeToSell: 'Temporada de bodas y graduaciones (Marzo a Mayo / Noviembre a Diciembre).',
+          trend: 'Valor de reventa extremadamente estable (los juegos de Zelda no se deprecian)',
+          annualDepreciationRate: '3% anual (mantiene valor como oro)',
+          liquidityIndex: 'Alta',
+          marketNotes: 'De los juegos más fáciles de liquidar en México en menos de 24 horas.',
+          bestTimeToSell: 'Cualquier fin de semana.',
         },
       },
-      formattedReport: `#### 📸 Identificación del Producto
-- **Producto:** Sony Alpha 7 IV Kit 28-70mm OSS
+      formattedReport: `### 🇲🇽 SnapPrice MX - Valuación Gamer Oficial
+#### 📸 Identificación del Producto
+- **Producto:** The Legend of Zelda: Tears of the Kingdom (Físico Switch)
 - **Estado Aparente:** Como nuevo
-- *“Para afinar el precio exacto, indícame: ¿Menos de 15,000 disparos? ¿Incluye el lente kit?”*
 
 #### 📊 Radiografía de Mercado (México)
-- **Nuevo (Retail):** $44,999 MXN – $52,999 MXN
-- **Usado (Rango de mercado):** $32,000 MXN – $41,000 MXN
-- **Promedio Usado Real:** **$36,500 MXN**
+- **Nuevo (Retail):** $1,299 MXN – $1,599 MXN
+- **Usado (Rango de mercado):** $850 MXN – $1,100 MXN
+- **Promedio Usado Real:** **$950 MXN**
 
 ---
 
 #### 🎯 Estrategia Recomendada (Venta Particular)
-- ⚡ **Venta Rápida:** **$30,500 MXN** (Ideal para cerrar trato en pocos días).
-- ⚖️ **Precio Justo:** **$36,500 MXN** (Recomendado para Mercado Libre / Marketplace).
-- ⏳ **Venta Paciente:** **$40,500 MXN** (Si cuentas con caja, accesorios y cero prisa).
-- 📝 **Ficha para Publicar (Copia y Pega):**
-  - **Título SEO sugerido:** Sony Alpha A7 IV Kit Lente 28-70mm Impecable Pocos Disparos Con Caja
-  - **Descripción corta:** Sony Alpha a7 IV de 33MP en estado impecable. Sensor limpio, bajo conteo de disparos. Incluye objetivo 28-70mm OSS y batería original.`,
+- ⚡ **Venta Rápida:** **$800 MXN**
+- ⚖️ **Precio Justo:** **$950 MXN**
+- ⏳ **Venta Paciente:** **$1,050 MXN**`,
       timestamp: new Date().toISOString(),
-      imagePreviewUrl: '/src/assets/images/sample_camera_1793599980915.jpg',
+      imagePreviewUrl: '/src/assets/images/sample_ps5_1793599980617.jpg',
+      realMarketSamples: [
+        {
+          platform: 'Mercado Libre MX',
+          title: 'Zelda Tears of the Kingdom Nintendo Switch Físico Original',
+          price: 999,
+          condition: 'Usado - Como nuevo',
+          sellerReputation: 'MercadoLíder Platinum (4.9★)',
+          url: 'https://listado.mercadolibre.com.mx/zelda-tears-of-the-kingdom',
+          isSold: true,
+          dateReported: 'Vendido hoy',
+        },
+      ],
+      fairMarketCalculation: {
+        sampleCount: 22,
+        outliersExcluded: 3,
+        medianPrice: 950,
+        formulaNotes: 'Mediana de 19 ventas registradas en plataformas mexicanas.',
+        confidenceScore: 99,
+      },
+      todayRecommendation: {
+        todayDate: 'Viernes, 6 de noviembre de 2026',
+        recommendedSellPriceToday: 800,
+        expectedSaleVelocity: 'Venta rápida (24 a 48 hrs)',
+        marketMomentum: 'Juego de culto con demanda continua en todo México',
+        optimalListingTime: 'Publicar hoy entre 4:00 PM y 8:00 PM',
+        gamingDemandIndex: 'Muy Alta',
+        cashInHandFast: 800,
+      },
     },
   },
 ];

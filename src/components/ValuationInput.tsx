@@ -365,12 +365,45 @@ export const ValuationInput: React.FC<ValuationInputProps> = ({
                   <span className="text-[11px] text-emerald-400 font-normal">Súper fácil</span>
                 </label>
                 <textarea
-                  rows={4}
+                  rows={3}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Ej: iPhone 13 Pro 128GB color Grafito estética 9.5 con caja, o PlayStation 5 Digital con control..."
-                  className="w-full flex-1 bg-slate-950/80 border border-slate-800 rounded-2xl p-3 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/40 transition-all resize-none"
+                  placeholder="Ej: PlayStation 5 Slim 1TB Estándar con 1 control DualSense blanco y caja, o Nintendo Switch OLED..."
+                  className="w-full bg-slate-950/80 border border-slate-800 rounded-2xl p-3 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/40 transition-all resize-none"
                 />
+
+                {/* Preguntas de Apoyo Rápidas / Atajos Gamer */}
+                <div className="space-y-1 pt-1">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                    ⚡ Atajos rápidos (Toca para autocompletar):
+                  </span>
+                  <div className="flex flex-wrap gap-1">
+                    {[
+                      'PS5 Slim 1TB',
+                      'Switch OLED',
+                      'Xbox Series X',
+                      'Con Lector',
+                      'Digital',
+                      'Con Caja Original',
+                      'Sin Drift al 100%',
+                      '2 Controles',
+                      'Juego Físico',
+                    ].map((pill) => (
+                      <button
+                        key={pill}
+                        type="button"
+                        onClick={() => {
+                          setDescription((prev) =>
+                            prev.includes(pill) ? prev : prev ? `${prev}, ${pill}` : pill
+                          );
+                        }}
+                        className="px-2 py-0.5 text-[10px] font-semibold text-emerald-300 bg-emerald-950/70 hover:bg-emerald-900/80 border border-emerald-500/30 rounded-lg transition-colors cursor-pointer"
+                      >
+                        + {pill}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               {/* Physical Condition Quick Tag */}

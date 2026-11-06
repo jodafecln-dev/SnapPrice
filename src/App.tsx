@@ -7,6 +7,8 @@ import { MicroCheckBar } from './components/MicroCheckBar';
 import { StrategyPanel } from './components/StrategyPanel';
 import { ReportModal } from './components/ReportModal';
 import { StoryCardModal } from './components/StoryCardModal';
+import { TodaySaleCard } from './components/TodaySaleCard';
+import { TransparentMarketPanel } from './components/TransparentMarketPanel';
 import { CameraCapture } from './components/CameraCapture';
 import { HistoryDrawer } from './components/HistoryDrawer';
 import { AntiFraudSection } from './components/AntiFraudSection';
@@ -38,9 +40,9 @@ export default function App() {
 
   // Micro-check answered states
   const [microAnswers, setMicroAnswers] = useState<Record<string, string>>({
-    storage: '128 GB',
-    battery_health: '84% a 89% (Buena)',
-    box_accessories: 'Caja + Cable original',
+    controllers_count: '1 Control original',
+    digital_account: 'Edición Estándar (Con Lector)',
+    box_condition: 'Con caja y uniceles originales',
   });
 
   // Modals state
@@ -527,6 +529,12 @@ export default function App() {
               }}
             />
 
+            {/* Sugerencia de Venta al Día de Hoy */}
+            <TodaySaleCard
+              todayRec={currentResult.todayRecommendation}
+              result={currentResult}
+            />
+
             {/* Micro-Check Bar (Pillar 2: Preguntas de Desempate) */}
             {currentResult.microCheck && currentResult.microCheck.length > 0 && (
               <MicroCheckBar
@@ -544,6 +552,13 @@ export default function App() {
             <MarketGauge
               radiography={currentResult.marketRadiography}
               productName={currentResult.product.exactName}
+            />
+
+            {/* Muestreo Transparente en Vivo de Comercio Electrónico & Fórmula FMV */}
+            <TransparentMarketPanel
+              samples={currentResult.realMarketSamples}
+              calculation={currentResult.fairMarketCalculation}
+              result={currentResult}
             />
 
             {/* Recommended Strategy (Pillar 3 & Mathematical Engine) */}
